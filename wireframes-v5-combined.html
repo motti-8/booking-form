@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Response Booking Form - Complete Wireframes v5</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+    h1 { font-size: 2rem; margin-bottom: 10px; color: #c41e3a; }
+    .subtitle { color: #666; margin-bottom: 40px; font-size: 1.1rem; }
+    .section { margin-bottom: 60px; }
+    .section-header { background: #c41e3a; color: white; padding: 15px 25px; border-radius: 8px 8px 0 0; }
+    .section-header h2 { font-size: 1.3rem; margin-bottom: 5px; }
+    .section-header p { opacity: 0.9; font-size: 0.95rem; }
+    .wireframe-row { display: flex; gap: 30px; background: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex-wrap: wrap; align-items: flex-start; }
+    .wireframe { flex: 1; min-width: 300px; }
+    .wireframe.mobile-fixed { flex: 0 0 auto; min-width: auto; }
+    .wireframe-label { font-weight: 600; margin-bottom: 15px; color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .wireframe-box { border: 2px solid #ddd; border-radius: 8px; background: #fafafa; overflow: hidden; }
+    .wf-header { background: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+    .wf-logo { width: 40px; height: 40px; background: #c41e3a; border-radius: 6px; }
+    .wf-header-text { font-weight: 600; font-size: 1.1rem; margin-left: 12px; }
+    .wf-cart-icon { position: relative; font-size: 1.3rem; cursor: pointer; }
+    .wf-cart-badge { position: absolute; top: -8px; right: -8px; background: #c41e3a; color: white; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+    .wf-progress { display: flex; justify-content: center; align-items: center; padding: 20px; gap: 10px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+    .wf-progress-step { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #999; }
+    .wf-progress-step .dot { width: 28px; height: 28px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem; }
+    .wf-progress-step.active { color: #c41e3a; }
+    .wf-progress-step.active .dot { background: #c41e3a; color: white; }
+    .wf-progress-step.complete .dot { background: #16a34a; color: white; }
+    .wf-progress-line { width: 40px; height: 2px; background: #e0e0e0; }
+    .wf-progress-line.done { background: #16a34a; }
+    .wf-mobile { width: 320px; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .version-badge { display: inline-block; background: #c41e3a; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: 10px; }
+    .device-label { display: inline-block; background: #e5e7eb; color: #374151; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-left: 8px; text-transform: uppercase; }
+    .wf-location-pill { display: inline-block; padding: 12px 24px; border: 2px solid #ddd; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.15s; background: white; }
+    .wf-location-pill:hover { border-color: #c41e3a; background: #fff5f5; }
+    .wf-location-pill.online { border-style: dashed; }
+    .wf-filter-pill { display: inline-block; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; background: #f3f4f6; color: #4b5563; font-weight: 500; }
+    .wf-filter-pill.active { background: #c41e3a; color: white; }
+    .wf-course-card { background: white; border: 2px solid #e5e7eb; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.15s; }
+    .wf-course-card:hover { border-color: #c41e3a; box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15); }
+    .wf-course-card .img { height: 80px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.85rem; }
+    .wf-course-card .content { padding: 12px; }
+    .wf-course-card .tag { font-size: 0.65rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .wf-course-card .title { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #333; }
+    .wf-course-card .price { font-size: 0.8rem; color: #666; margin-bottom: 8px; }
+    .wf-course-card .price strong { color: #c41e3a; }
+    .wf-course-card .link { color: #c41e3a; font-size: 0.8rem; font-weight: 500; text-decoration: none; }
+    .wf-dropdown { display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
+    .wf-dropdown.selected { border-color: #c41e3a; }
+    .wf-dropdown-label { font-size: 0.7rem; color: #999; text-transform: uppercase; }
+    .wf-dropdown-value { font-weight: 600; font-size: 0.9rem; }
+    .wf-drawer-header { background: #c41e3a; color: white; padding: 20px 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .wf-drawer-header h4 { font-size: 1.15rem; margin-bottom: 5px; }
+    .wf-drawer-subtitle { font-size: 0.9rem; opacity: 0.85; }
+    .wf-close { font-size: 1.6rem; cursor: pointer; opacity: 0.8; line-height: 1; }
+    .wf-toggle-btn { flex: 1; padding: 14px; text-align: center; font-size: 0.9rem; background: #f8f8f8; border: none; cursor: pointer; font-weight: 500; }
+    .wf-toggle-btn.active { background: white; font-weight: 600; color: #c41e3a; }
+    .wf-session-compact { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #eee; cursor: pointer; gap: 15px; }
+    .wf-session-compact.selected { background: #fff5f5; border-left: 4px solid #c41e3a; padding-left: 16px; }
+    .wf-session-compact .date-block { text-align: center; min-width: 50px; padding: 8px; background: #f5f5f5; border-radius: 6px; }
+    .wf-session-compact .date-block .day { font-size: 1.1rem; font-weight: 700; color: #333; line-height: 1; }
+    .wf-session-compact .date-block .month { font-size: 0.7rem; color: #666; text-transform: uppercase; }
+    .wf-session-compact .details { flex: 1; }
+    .wf-session-compact .details .title { font-weight: 600; font-size: 0.9rem; color: #333; margin-bottom: 2px; }
+    .wf-session-compact .details .time-loc { font-size: 0.8rem; color: #666; }
+    .wf-session-compact .price-avail { text-align: right; min-width: 80px; }
+    .wf-session-compact .price-avail .price { font-weight: 700; color: #c41e3a; font-size: 0.95rem; }
+    .wf-session-compact .price-avail .avail { font-size: 0.75rem; color: #666; }
+    .wf-session-compact .price-avail .avail.low { color: #e65100; font-weight: 600; }
+    .tag-express { background: #e3f2fd; color: #1565c0; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; margin-left: 8px; font-weight: 600; }
+    .tag-online { background: #f3f4f6; color: #4b5563; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; margin-left: 8px; font-weight: 600; }
+    .wf-button { background: #c41e3a; color: white; border: none; padding: 16px 32px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; font-size: 1rem; }
+    .wf-drawer-footer { padding: 18px 25px; border-top: 2px solid #eee; background: #fafafa; }
+    .annotation { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 15px; margin-top: 15px; font-size: 0.9rem; color: #92400e; }
+
+    /* Checkout specific */
+    .checkout-layout { display: flex; min-height: 500px; }
+    .checkout-main { flex: 1; padding: 30px; border-right: 1px solid #eee; }
+    .checkout-sidebar { width: 320px; padding: 25px; background: #f9f9f9; }
+    .form-section { margin-bottom: 30px; }
+    .form-section h3 { font-size: 1.1rem; margin-bottom: 15px; color: #333; }
+    .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+    .form-field { flex: 1; }
+    .form-field label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 5px; color: #555; }
+    .form-field input, .form-field select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 0.95rem; }
+    .form-field input:focus { border-color: #c41e3a; outline: none; }
+    .form-field.error input { border-color: #dc2626; }
+    .form-field .error-msg { color: #dc2626; font-size: 0.8rem; margin-top: 4px; }
+    .btn { padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; }
+    .btn-primary { background: #c41e3a; color: white; }
+    .btn-secondary { background: white; color: #c41e3a; border: 2px solid #c41e3a; }
+    .btn-full { width: 100%; }
+    .btn-large { padding: 18px 32px; font-size: 1.1rem; }
+    .tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+    .tab { padding: 12px 24px; font-weight: 500; color: #666; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab.active { color: #c41e3a; border-bottom-color: #c41e3a; }
+    .card { background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+    .card.selected { border-color: #c41e3a; background: #fff5f5; }
+    .you-badge { background: #c41e3a; color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; margin-left: 8px; }
+    .student-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; }
+    .student-row:last-child { border-bottom: none; }
+    .student-avatar { width: 36px; height: 36px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; margin-right: 12px; }
+    .student-info { flex: 1; }
+    .student-name { font-weight: 600; font-size: 0.9rem; }
+    .student-email { font-size: 0.8rem; color: #666; }
+    .remove-btn { color: #dc2626; font-size: 0.85rem; cursor: pointer; }
+    .summary-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-course { font-weight: 600; font-size: 0.9rem; }
+    .summary-detail { font-size: 0.8rem; color: #666; }
+    .summary-price { font-weight: 600; color: #c41e3a; }
+    .summary-total { display: flex; justify-content: space-between; padding: 15px 0; font-size: 1.1rem; font-weight: 700; border-top: 2px solid #333; margin-top: 10px; }
+    .coupon-row { display: flex; gap: 10px; margin: 15px 0; }
+    .coupon-row input { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 6px; }
+    .coupon-row button { padding: 10px 15px; background: #f3f4f6; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; }
+
+    /* Payment specific */
+    .stripe-element { background: white; border: 2px solid #ddd; border-radius: 6px; padding: 15px; min-height: 50px; display: flex; align-items: center; }
+    .stripe-element span { color: #999; font-size: 0.9rem; }
+    .checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin: 15px 0; }
+    .checkbox-row input { width: 20px; height: 20px; margin-top: 2px; }
+    .checkbox-row label { font-size: 0.9rem; color: #555; }
+    .checkbox-row a { color: #c41e3a; }
+    .radio-option { display: flex; align-items: center; gap: 12px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+    .radio-option.selected { border-color: #c41e3a; background: #fff5f5; }
+    .radio-option input { width: 20px; height: 20px; }
+    .radio-option-content { flex: 1; }
+    .radio-option-title { font-weight: 600; font-size: 0.95rem; }
+    .radio-option-desc { font-size: 0.85rem; color: #666; }
+    .success-icon { width: 80px; height: 80px; background: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; color: white; }
+    .confirmation-card { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+    .confirmation-header { text-align: center; margin-bottom: 30px; }
+    .booking-ref { background: #f3f4f6; padding: 8px 15px; border-radius: 6px; font-family: monospace; font-size: 1rem; display: inline-block; }
+
+    /* Navigation */
+    .nav-toc { background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 40px; }
+    .nav-toc h3 { margin-bottom: 15px; font-size: 1rem; }
+    .nav-toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+    .nav-toc a { display: inline-block; padding: 8px 15px; background: #f3f4f6; border-radius: 6px; text-decoration: none; color: #333; font-size: 0.85rem; transition: all 0.15s; }
+    .nav-toc a:hover { background: #c41e3a; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Real Response Booking Form <span class="version-badge">v5 - Complete</span></h1>
+    <p class="subtitle">Complete booking journey: Entry screens, Checkout flow, Payment & Confirmation</p>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="nav-toc">
+      <h3>Quick Navigation</h3>
+      <ul>
+        <li><a href="#section0">0. Cold Start</a></li>
+        <li><a href="#section0b">0b. Course Grid</a></li>
+        <li><a href="#section0c">0c. Session Drawer</a></li>
+        <li><a href="#section0d">0d. Add to Cart</a></li>
+        <li><a href="#section5">5. Are You Attending?</a></li>
+        <li><a href="#section6">6. Contact Details</a></li>
+        <li><a href="#section6b">6b. Business Tab</a></li>
+        <li><a href="#section7">7. Participants</a></li>
+        <li><a href="#section7b">7b. Add Student</a></li>
+        <li><a href="#section8">8. Payment</a></li>
+        <li><a href="#section8b">8b. Invoice Option</a></li>
+        <li><a href="#section9">9. Confirmation</a></li>
+      </ul>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- PART 1: ENTRY SCREENS                        -->
+    <!-- ============================================ -->
+
+    <!-- SECTION 0: COLD START -->
+    <section class="section" id="section0">
+      <div class="section-header">
+        <h2>0. Cold Start — Location Selection</h2>
+        <p>For users landing directly on /booking (not via magic link)</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo"></div>
+                <span class="wf-header-text">Booking</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="#" style="color: #666; text-decoration: none; font-size: 0.9rem;">Sign in</a>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step active"><div class="dot">1</div><span>Select Course</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+            <div style="padding: 60px 40px; text-align: center;">
+              <h2 style="font-size: 1.5rem; margin-bottom: 10px; color: #333;">Where would you like to train?</h2>
+              <p style="color: #666; margin-bottom: 30px;">Select a location to see available courses and dates</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; max-width: 600px; margin: 0 auto;">
+                <div class="wf-location-pill">📍 Melbourne</div>
+                <div class="wf-location-pill">📍 Sydney</div>
+                <div class="wf-location-pill">📍 Brisbane</div>
+                <div class="wf-location-pill">📍 Perth</div>
+                <div class="wf-location-pill">📍 Adelaide</div>
+                <div class="wf-location-pill online">💻 Online</div>
+              </div>
+              <p style="color: #999; font-size: 0.85rem; margin-top: 30px;">Online courses require equipment shipped to your location</p>
+            </div>
+          </div>
+          <div class="annotation"><strong>Cold start:</strong> Users arriving without location context see this first. "Online" has dashed border to subtly differentiate.</div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo" style="width: 32px; height: 32px;"></div>
+                <span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span>
+              </div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒</div>
+            </div>
+            <div class="wf-progress" style="padding: 15px 10px; gap: 5px;">
+              <div class="wf-progress-step active" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">1</div><span>Course</span></div>
+              <div class="wf-progress-line" style="width: 20px;"></div>
+              <div class="wf-progress-step" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line" style="width: 20px;"></div>
+              <div class="wf-progress-step" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">3</div><span>Done</span></div>
+            </div>
+            <div style="padding: 30px 20px; text-align: center;">
+              <h2 style="font-size: 1.2rem; margin-bottom: 8px; color: #333;">Where would you like to train?</h2>
+              <p style="color: #666; margin-bottom: 25px; font-size: 0.9rem;">Select your location</p>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Melbourne</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Sydney</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Brisbane</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Perth</div>
+                <div class="wf-location-pill online" style="padding: 14px 20px; text-align: center;">💻 Online</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 0b: COURSE GRID -->
+    <section class="section" id="section0b">
+      <div class="section-header">
+        <h2>0b. Course Grid — Browsing Courses</h2>
+        <p>After location selected: category filters, course cards with pricing, "View dates" links</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex: 2;">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo"></div>
+                <span class="wf-header-text">Booking</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="#" style="color: #666; text-decoration: none; font-size: 0.9rem;">Sign in</a>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step active"><div class="dot">1</div><span>Select Course</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+            <div style="padding: 20px 25px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+              <div class="wf-dropdown selected">
+                <div>
+                  <div class="wf-dropdown-label">Location</div>
+                  <div class="wf-dropdown-value">Melbourne ▼</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span class="wf-filter-pill active">All</span>
+                <span class="wf-filter-pill">Basic</span>
+                <span class="wf-filter-pill">Advanced</span>
+                <span class="wf-filter-pill">Childcare</span>
+                <span class="wf-filter-pill">Workplace</span>
+              </div>
+            </div>
+            <div style="padding: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #ef4444, #dc2626);">❤️ CPR</div>
+                <div class="content">
+                  <div class="tag">Basic</div>
+                  <div class="title">Provide CPR</div>
+                  <div class="price">From <strong>$89</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">🩹 First Aid</div>
+                <div class="content">
+                  <div class="tag">Basic</div>
+                  <div class="title">Provide First Aid</div>
+                  <div class="price">From <strong>$166</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">🏥 Advanced</div>
+                <div class="content">
+                  <div class="tag">Advanced</div>
+                  <div class="title">Advanced First Aid</div>
+                  <div class="price">From <strong>$395</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🔥 Fire</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Fire Warden</div>
+                  <div class="price">From <strong>$120</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #10b981, #059669);">👶 Child</div>
+                <div class="content">
+                  <div class="tag">Childcare</div>
+                  <div class="title">Childcare First Aid</div>
+                  <div class="price">From <strong>$175</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">⚡ LVR</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Low Voltage Rescue</div>
+                  <div class="price">From <strong>$195</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #ec4899, #db2777);">🧠 Mental</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Mental Health FA</div>
+                  <div class="price">From <strong>$295</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">🌿 Remote</div>
+                <div class="content">
+                  <div class="tag">Advanced</div>
+                  <div class="title">Remote Area FA</div>
+                  <div class="price">From <strong>$495</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation"><strong>Desktop grid:</strong> 4 columns, cards hover (border turns red). "From $XX" shows starting price. "View dates →" text link. Entire card clickable.</div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo" style="width: 32px; height: 32px;"></div>
+                <span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span>
+              </div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒</div>
+            </div>
+            <div style="padding: 12px; border-bottom: 1px solid #eee;">
+              <div class="wf-dropdown selected" style="padding: 8px 12px; width: 100%; margin-bottom: 10px;">
+                <div>
+                  <div class="wf-dropdown-label" style="font-size: 0.6rem;">Location</div>
+                  <div class="wf-dropdown-value" style="font-size: 0.8rem;">Melbourne ▼</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; overflow-x: auto;">
+                <span class="wf-filter-pill active" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">All</span>
+                <span class="wf-filter-pill" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">Basic</span>
+                <span class="wf-filter-pill" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">Advanced</span>
+              </div>
+            </div>
+            <div style="max-height: 350px; overflow-y: auto;">
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">❤️</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Basic</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Provide CPR</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$89</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🩹</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Basic</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Provide First Aid</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$166</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🏥</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Advanced</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Advanced First Aid</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$395</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🔥</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Workplace</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Fire Warden</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$120</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 0c: DRAWER OVER GRID -->
+    <section class="section" id="section0c">
+      <div class="section-header">
+        <h2>0c. Session Drawer — Opens Over Grid</h2>
+        <p>Slide-over drawer when course clicked; grid stays visible behind</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex: 2;">
+          <div class="wireframe-label">Desktop — Drawer Over Grid <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box" style="position: relative; min-height: 450px;">
+            <div style="opacity: 0.3;">
+              <div class="wf-header">
+                <div style="display: flex; align-items: center;"><div class="wf-logo"></div><span class="wf-header-text">Booking</span></div>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+              <div style="padding: 20px 25px; display: flex; gap: 20px;">
+                <div class="wf-dropdown selected"><div><div class="wf-dropdown-label">Location</div><div class="wf-dropdown-value">Melbourne ▼</div></div></div>
+                <span class="wf-filter-pill active">All</span>
+              </div>
+              <div style="padding: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #ef4444;">CPR</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #3b82f6;">FA</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #8b5cf6;">Adv</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #f59e0b;">Fire</div></div>
+              </div>
+            </div>
+            <div style="position: absolute; top: 0; right: 0; width: 400px; height: 100%; background: white; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column;">
+              <div class="wf-drawer-header" style="padding: 15px 20px;">
+                <div><h4 style="font-size: 1.05rem;">Provide CPR</h4><div class="wf-drawer-subtitle" style="font-size: 0.8rem;">HLTAID009 · Melbourne · 8 sessions</div></div>
+                <span class="wf-close" style="font-size: 1.4rem;">×</span>
+              </div>
+              <div style="display: flex; border-bottom: 2px solid #eee;">
+                <button class="wf-toggle-btn active" style="padding: 10px;">LIST</button>
+                <button class="wf-toggle-btn" style="padding: 10px;">CALENDAR</button>
+              </div>
+              <div style="flex: 1; overflow-y: auto;">
+                <div class="wf-session-compact selected" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">13</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">Provide CPR</div><div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail low" style="font-size: 0.7rem;">3 left</div></div>
+                </div>
+                <div class="wf-session-compact" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">14</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">CPR <span class="tag-online" style="font-size: 0.6rem;">ONLINE</span></div><div class="time-loc" style="font-size: 0.75rem;">10:00am · Virtual</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail" style="font-size: 0.7rem;">20</div></div>
+                </div>
+                <div class="wf-session-compact" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">15</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">CPR <span class="tag-express" style="font-size: 0.6rem;">EXPRESS</span></div><div class="time-loc" style="font-size: 0.75rem;">9:00am · CBD</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail" style="font-size: 0.7rem;">8</div></div>
+                </div>
+              </div>
+              <div class="wf-drawer-footer" style="padding: 15px 20px;">
+                <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+          <div class="annotation"><strong>Drawer behavior:</strong> Slides from right. Grid fades but visible. Click outside to close.</div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Full Screen <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div><h4 style="font-size: 1rem;">Provide CPR</h4><div style="font-size: 0.8rem; opacity: 0.85;">Melbourne · 8 sessions</div></div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div style="display: flex; border-bottom: 2px solid #eee;">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+            <div style="flex: 1; overflow-y: auto; max-height: 280px;">
+              <div class="wf-session-compact selected" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">13</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">Provide CPR</div><div class="time-loc" style="font-size: 0.7rem;">9:00am · Caulfield</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div><div class="avail low" style="font-size: 0.65rem;">3 left</div></div>
+              </div>
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">14</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">CPR <span class="tag-online" style="font-size: 0.55rem;">ONLINE</span></div><div class="time-loc" style="font-size: 0.7rem;">10:00am · Virtual</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div></div>
+              </div>
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">15</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">CPR <span class="tag-express" style="font-size: 0.55rem;">EXPRESS</span></div><div class="time-loc" style="font-size: 0.7rem;">9:00am · CBD</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div></div>
+              </div>
+            </div>
+            <div class="wf-drawer-footer" style="padding: 12px 15px;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 0d: ADD TO CART TOAST -->
+    <section class="section" id="section0d">
+      <div class="section-header">
+        <h2>0d. "Added to Cart" Toast</h2>
+        <p>Visual confirmation after adding to cart</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Toast <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header" style="position: relative;">
+              <div style="display: flex; align-items: center;"><div class="wf-logo"></div><span class="wf-header-text">Booking</span></div>
+              <div class="wf-cart-icon">🛒<span class="wf-cart-badge" style="background: #16a34a;">1</span></div>
+              <div style="position: absolute; top: 100%; right: 20px; margin-top: 10px; background: #166534; color: white; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <span style="font-size: 1.2rem;">✓</span>
+                <div>
+                  <div style="font-weight: 600;">Added to cart</div>
+                  <div style="font-size: 0.85rem; opacity: 0.9;">Provide CPR · Mon 13 Jan</div>
+                </div>
+                <a href="#" style="color: white; margin-left: 15px; font-weight: 500; text-decoration: underline;">View cart</a>
+              </div>
+            </div>
+            <div style="padding: 60px 40px; text-align: center; color: #666;">
+              <p>Course grid continues below...</p>
+              <p style="font-size: 0.85rem; margin-top: 10px;">Toast auto-dismisses after 4 seconds</p>
+            </div>
+          </div>
+          <div class="annotation"><strong>Toast:</strong> Appears top-right. Shows course + date. "View cart" link. Auto-dismisses after 4s.</div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Bottom Toast <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile" style="position: relative;">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;"><div class="wf-logo" style="width: 32px; height: 32px;"></div><span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span></div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒<span class="wf-cart-badge" style="background: #16a34a; width: 16px; height: 16px; font-size: 0.6rem;">1</span></div>
+            </div>
+            <div style="padding: 100px 20px; text-align: center; color: #999; font-size: 0.9rem;">Course list...</div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #166534; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.1rem;">✓</span>
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Added to cart</div>
+                  <div style="font-size: 0.75rem; opacity: 0.9;">CPR · Mon 13 Jan</div>
+                </div>
+              </div>
+              <a href="#" style="color: white; font-weight: 600; font-size: 0.85rem; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px; text-decoration: none;">View Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PART 2: CHECKOUT FLOW                        -->
+    <!-- ============================================ -->
+
+    <!-- SECTION 5: ARE YOU ATTENDING -->
+    <section class="section" id="section5">
+      <div class="section-header">
+        <h2>5. "Are You Attending?" Prompt</h2>
+        <p>First thing users see at checkout — fixes the "SAME CONTACT" confusion from v2/v3 feedback</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+              <div class="wf-cart-icon">🛒<span class="wf-cart-badge">1</span></div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+              <div class="wf-progress-line done"></div>
+              <div class="wf-progress-step active"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+            <div style="padding:60px 40px;text-align:center;max-width:500px;margin:0 auto">
+              <div style="font-size:3rem;margin-bottom:20px">🎓</div>
+              <h2 style="font-size:1.5rem;margin-bottom:10px">Are you attending this course?</h2>
+              <p style="color:#666;margin-bottom:30px">This helps us set up enrollment correctly</p>
+              <div style="display:flex;gap:15px;justify-content:center">
+                <button class="btn btn-primary" style="min-width:140px">Yes, I'm attending</button>
+                <button class="btn btn-secondary" style="min-width:140px">No, booking for others</button>
+              </div>
+              <p style="font-size:.85rem;color:#999;margin-top:25px">You can always add yourself to courses later</p>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong>Key UX fix:</strong> This replaces confusing "SAME CONTACT" button. If "Yes" → auto-add booker as student to ALL courses in cart with "YOU" badge. If "No" → skip to contact details, no auto-enrollment.
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding:12px 15px">
+              <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div><span style="font-weight:600;margin-left:10px;font-size:1rem">Booking</span></div>
+              <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">1</span></div>
+            </div>
+            <div class="wf-progress" style="padding:12px;gap:5px">
+              <div class="wf-progress-step complete" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">✓</div><span>Course</span></div>
+              <div class="wf-progress-line done" style="width:20px"></div>
+              <div class="wf-progress-step active" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line" style="width:20px"></div>
+              <div class="wf-progress-step" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">3</div><span>Done</span></div>
+            </div>
+            <div style="padding:40px 25px;text-align:center">
+              <div style="font-size:2.5rem;margin-bottom:15px">🎓</div>
+              <h2 style="font-size:1.25rem;margin-bottom:8px">Are you attending?</h2>
+              <p style="color:#666;margin-bottom:25px;font-size:.9rem">This helps us set up enrollment</p>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <button class="btn btn-primary btn-full">Yes, I'm attending</button>
+                <button class="btn btn-secondary btn-full">No, booking for others</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: CONTACT DETAILS -->
+    <section class="section" id="section6">
+      <div class="section-header">
+        <h2>6. Contact Details Form</h2>
+        <p>Personal/Business tabs — business shows company fields</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex:2">
+          <div class="wireframe-label">Desktop — Full Checkout Layout <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+              <div class="wf-cart-icon">🛒<span class="wf-cart-badge">2</span></div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+              <div class="wf-progress-line done"></div>
+              <div class="wf-progress-step active"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+
+            <div class="checkout-layout">
+              <div class="checkout-main">
+
+                <!-- Contact Section -->
+                <div class="form-section">
+                  <h3>1. Contact Details</h3>
+                  <div class="tabs">
+                    <div class="tab active">Personal</div>
+                    <div class="tab">Business</div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label>First Name *</label>
+                      <input type="text" value="Sarah">
+                    </div>
+                    <div class="form-field">
+                      <label>Last Name *</label>
+                      <input type="text" value="Johnson">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label>Email *</label>
+                      <input type="email" value="sarah@email.com">
+                    </div>
+                    <div class="form-field">
+                      <label>Phone *</label>
+                      <input type="tel" value="0412 345 678">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Participants Section (collapsed preview) -->
+                <div class="form-section" style="opacity:.6">
+                  <h3 style="color:#999">2. Participants <span style="font-weight:400;font-size:.9rem">(next step)</span></h3>
+                </div>
+
+                <!-- Payment Section (collapsed preview) -->
+                <div class="form-section" style="opacity:.4">
+                  <h3 style="color:#999">3. Payment <span style="font-weight:400;font-size:.9rem">(final step)</span></h3>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top:20px">Continue to Participants →</button>
+              </div>
+
+              <!-- Sidebar -->
+              <div class="checkout-sidebar">
+                <h4 style="margin-bottom:15px;font-size:1rem">Order Summary</h4>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Provide CPR</div>
+                    <div class="summary-detail">Mon 13 Jan · 9:00am<br>Caulfield South</div>
+                    <div class="summary-detail" style="margin-top:5px">
+                      <span style="background:#e5e7eb;padding:2px 6px;border-radius:3px;font-size:.75rem">1 spot</span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$89</div>
+                </div>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Fire Warden</div>
+                    <div class="summary-detail">Wed 15 Jan · 1:00pm<br>Melbourne CBD</div>
+                    <div class="summary-detail" style="margin-top:5px">
+                      <span style="background:#e5e7eb;padding:2px 6px;border-radius:3px;font-size:.75rem">1 spot</span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$120</div>
+                </div>
+
+                <div class="coupon-row">
+                  <input type="text" placeholder="Coupon code">
+                  <button>Apply</button>
+                </div>
+
+                <div class="summary-total">
+                  <span>Total</span>
+                  <span>$209</span>
+                </div>
+
+                <p style="font-size:.75rem;color:#999;margin-top:15px;text-align:center">🔒 Your cart is saved for 72 hours</p>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong>Layout:</strong> Main content left, order summary right. Sections expand as user progresses. "Business" tab adds Company Name + ABN fields.
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding:12px 15px">
+              <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+              <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">2</span></div>
+            </div>
+
+            <div style="padding:15px">
+              <h3 style="font-size:1rem;margin-bottom:12px">1. Contact Details</h3>
+              <div class="tabs" style="margin-bottom:15px">
+                <div class="tab active" style="padding:8px 15px;font-size:.85rem">Personal</div>
+                <div class="tab" style="padding:8px 15px;font-size:.85rem">Business</div>
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">First Name *</label>
+                <input type="text" value="Sarah" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Last Name *</label>
+                <input type="text" value="Johnson" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Email *</label>
+                <input type="email" value="sarah@email.com" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:15px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Phone *</label>
+                <input type="tel" value="0412 345 678" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+            </div>
+
+            <!-- Mobile sticky footer -->
+            <div style="border-top:2px solid #eee;padding:12px 15px;background:#f9f9f9">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="font-size:.9rem">2 courses</span>
+                <span style="font-weight:700">$209</span>
+              </div>
+              <button class="btn btn-primary btn-full" style="padding:12px">Continue →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6b: BUSINESS TAB -->
+    <section class="section" id="section6b">
+      <div class="section-header">
+        <h2>6b. Contact Details — Business Tab</h2>
+        <p>Additional fields for company bookings</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Business Fields <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box" style="padding:25px">
+            <div class="tabs" style="max-width:400px">
+              <div class="tab">Personal</div>
+              <div class="tab active">Business</div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Company Name *</label>
+                <input type="text" placeholder="Acme Corporation">
+              </div>
+              <div class="form-field">
+                <label>ABN <span style="color:#999;font-weight:400">(optional)</span></label>
+                <input type="text" placeholder="12 345 678 901">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Your Name *</label>
+                <input type="text" placeholder="Sarah Johnson">
+              </div>
+              <div class="form-field">
+                <label>Your Role <span style="color:#999;font-weight:400">(optional)</span></label>
+                <input type="text" placeholder="HR Manager">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Email *</label>
+                <input type="email" placeholder="sarah@acme.com">
+              </div>
+              <div class="form-field">
+                <label>Phone *</label>
+                <input type="tel" placeholder="0412 345 678">
+              </div>
+            </div>
+            <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:12px;margin-top:15px;font-size:.85rem;color:#0369a1">
+              💼 Business bookings can request an invoice instead of paying now
+            </div>
+          </div>
+          <div class="annotation"><strong>Business tab:</strong> Company Name required, ABN optional. Note about invoice option appears. This feeds into payment step.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: PARTICIPANT ENROLLMENT -->
+    <section class="section" id="section7">
+      <div class="section-header">
+        <h2>7. Participant Enrollment</h2>
+        <p>Adding students to courses — "YOU" badge for booker, "Add Me" for multi-course</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex:2">
+          <div class="wireframe-label">Desktop — Participants Section Expanded <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="checkout-layout" style="min-height:auto">
+              <div class="checkout-main">
+
+                <!-- Contact (collapsed) -->
+                <div class="form-section">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <h3 style="color:#16a34a">✓ 1. Contact Details</h3>
+                    <a href="#" style="color:#c41e3a;font-size:.85rem">Edit</a>
+                  </div>
+                  <p style="font-size:.9rem;color:#666;margin-top:5px">Sarah Johnson · sarah@email.com</p>
+                </div>
+
+                <!-- Participants (active) -->
+                <div class="form-section">
+                  <h3>2. Participants</h3>
+                  <p style="font-size:.9rem;color:#666;margin-bottom:20px">Add students to each course. You can enroll the same person in multiple courses.</p>
+
+                  <!-- Course 1 -->
+                  <div class="card selected">
+                    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+                      <div>
+                        <div style="font-weight:600">Provide CPR</div>
+                        <div style="font-size:.85rem;color:#666">Mon 13 Jan · 9:00am · Caulfield South</div>
+                      </div>
+                      <div style="font-weight:600;color:#c41e3a">$89</div>
+                    </div>
+
+                    <div style="background:#f9f9f9;border-radius:6px;overflow:hidden">
+                      <div class="student-row">
+                        <div class="student-avatar" style="background:#c41e3a;color:#fff">SJ</div>
+                        <div class="student-info">
+                          <div class="student-name">Sarah Johnson <span class="you-badge">YOU</span></div>
+                          <div class="student-email">sarah@email.com</div>
+                        </div>
+                        <span class="remove-btn">Remove</span>
+                      </div>
+                    </div>
+
+                    <button style="margin-top:12px;padding:10px 15px;background:#fff;border:2px dashed #ddd;border-radius:6px;width:100%;cursor:pointer;font-size:.9rem;color:#666">
+                      + Add another student to this course
+                    </button>
+                  </div>
+
+                  <!-- Course 2 -->
+                  <div class="card">
+                    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+                      <div>
+                        <div style="font-weight:600">Fire Warden</div>
+                        <div style="font-size:.85rem;color:#666">Wed 15 Jan · 1:00pm · Melbourne CBD</div>
+                      </div>
+                      <div style="font-weight:600;color:#c41e3a">$120</div>
+                    </div>
+
+                    <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:6px;padding:15px;text-align:center">
+                      <div style="color:#dc2626;font-weight:500;margin-bottom:8px">No students enrolled yet</div>
+                      <div style="display:flex;gap:10px;justify-content:center">
+                        <button style="padding:8px 15px;background:#c41e3a;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;font-size:.85rem">Add Me to This Course</button>
+                        <button style="padding:8px 15px;background:#fff;border:2px solid #ddd;border-radius:6px;font-weight:500;cursor:pointer;font-size:.85rem">Add Someone Else</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary" style="margin-top:20px">Continue to Payment →</button>
+                </div>
+              </div>
+
+              <!-- Sidebar with students shown -->
+              <div class="checkout-sidebar">
+                <h4 style="margin-bottom:15px;font-size:1rem">Order Summary</h4>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Provide CPR</div>
+                    <div class="summary-detail">Mon 13 Jan · Caulfield</div>
+                    <div style="margin-top:8px">
+                      <span style="display:inline-flex;align-items:center;background:#f3f4f6;padding:3px 8px;border-radius:4px;font-size:.75rem">
+                        <span style="width:18px;height:18px;background:#c41e3a;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;margin-right:5px">SJ</span>
+                        Sarah J.
+                      </span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$89</div>
+                </div>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Fire Warden</div>
+                    <div class="summary-detail">Wed 15 Jan · CBD</div>
+                    <div style="margin-top:8px">
+                      <span style="color:#dc2626;font-size:.75rem">⚠ No students</span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$120</div>
+                </div>
+
+                <div class="summary-total">
+                  <span>Total</span>
+                  <span>$209</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong>Key features:</strong> "YOU" badge on booker. "Add Me to This Course" button for multi-course bookings (from panel feedback). Warning state for courses with no students. Sidebar shows enrolled names.
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding:12px 15px">
+              <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+              <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">2</span></div>
+            </div>
+
+            <div style="padding:15px;max-height:380px;overflow-y:auto">
+              <h3 style="font-size:1rem;margin-bottom:12px">2. Participants</h3>
+
+              <!-- Course 1 -->
+              <div class="card selected" style="padding:12px">
+                <div style="font-weight:600;font-size:.9rem">Provide CPR</div>
+                <div style="font-size:.75rem;color:#666;margin-bottom:10px">Mon 13 Jan · Caulfield</div>
+
+                <div style="background:#f9f9f9;border-radius:6px;padding:10px;display:flex;align-items:center;gap:10px">
+                  <div style="width:32px;height:32px;background:#c41e3a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600">SJ</div>
+                  <div style="flex:1">
+                    <div style="font-weight:600;font-size:.85rem">Sarah J. <span class="you-badge" style="font-size:.6rem">YOU</span></div>
+                  </div>
+                  <span style="color:#dc2626;font-size:.75rem">✕</span>
+                </div>
+
+                <button style="margin-top:10px;padding:8px;background:#fff;border:2px dashed #ddd;border-radius:6px;width:100%;font-size:.8rem;color:#666">+ Add student</button>
+              </div>
+
+              <!-- Course 2 -->
+              <div class="card" style="padding:12px">
+                <div style="font-weight:600;font-size:.9rem">Fire Warden</div>
+                <div style="font-size:.75rem;color:#666;margin-bottom:10px">Wed 15 Jan · CBD</div>
+
+                <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:6px;padding:12px;text-align:center">
+                  <div style="color:#dc2626;font-size:.8rem;margin-bottom:8px">No students</div>
+                  <button style="padding:8px 12px;background:#c41e3a;color:#fff;border:none;border-radius:6px;font-size:.8rem;font-weight:500;width:100%">Add Me</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top:2px solid #eee;padding:12px 15px;background:#f9f9f9">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="font-size:.9rem">Total</span>
+                <span style="font-weight:700">$209</span>
+              </div>
+              <button class="btn btn-primary btn-full" style="padding:12px">Continue to Payment →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7b: ADD STUDENT MODAL -->
+    <section class="section" id="section7b">
+      <div class="section-header">
+        <h2>7b. Add Student Modal</h2>
+        <p>Form to add a new student — checks for existing Axcelerate match</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Add Student Modal <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box" style="background:rgba(0,0,0,.3);padding:40px;display:flex;justify-content:center;align-items:center;min-height:400px">
+            <div style="background:#fff;border-radius:12px;width:100%;max-width:450px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.2)">
+              <div style="padding:20px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+                <h3 style="font-size:1.1rem">Add Student</h3>
+                <span style="font-size:1.5rem;cursor:pointer;color:#999">×</span>
+              </div>
+              <div style="padding:20px">
+                <p style="font-size:.9rem;color:#666;margin-bottom:20px">Adding to: <strong>Provide CPR</strong> · Mon 13 Jan</p>
+
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>First Name *</label>
+                    <input type="text" placeholder="John">
+                  </div>
+                  <div class="form-field">
+                    <label>Last Name *</label>
+                    <input type="text" placeholder="Smith">
+                  </div>
+                </div>
+                <div class="form-field" style="margin-bottom:15px">
+                  <label>Email *</label>
+                  <input type="email" placeholder="john.smith@email.com">
+                </div>
+                <div class="form-field" style="margin-bottom:15px">
+                  <label>Phone <span style="color:#999;font-weight:400">(optional)</span></label>
+                  <input type="tel" placeholder="0400 000 000">
+                </div>
+                <div class="form-field">
+                  <label>Date of Birth <span style="color:#999;font-weight:400">(optional)</span></label>
+                  <input type="date">
+                </div>
+              </div>
+              <div style="padding:15px 20px;background:#f9f9f9;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end">
+                <button class="btn btn-secondary" style="padding:10px 20px">Cancel</button>
+                <button class="btn btn-primary" style="padding:10px 20px">Add Student</button>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong>Participant matching:</strong> When email is entered, system checks Axcelerate for existing contact. If found, auto-fills name/DOB and shows "Found existing profile" message. Prevents duplicates.
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Full Screen <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div style="padding:15px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+              <h3 style="font-size:1rem">Add Student</h3>
+              <span style="font-size:1.3rem;color:#999">×</span>
+            </div>
+            <div style="padding:15px">
+              <p style="font-size:.85rem;color:#666;margin-bottom:15px">Adding to: <strong>Provide CPR</strong></p>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px">First Name *</label>
+                <input type="text" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px">Last Name *</label>
+                <input type="text" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px">Email *</label>
+                <input type="email" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+              <div style="margin-bottom:12px">
+                <label style="display:block;font-size:.8rem;margin-bottom:4px">Phone</label>
+                <input type="tel" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+            </div>
+            <div style="padding:15px;border-top:1px solid #eee;background:#f9f9f9">
+              <button class="btn btn-primary btn-full" style="padding:12px">Add Student</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PART 3: PAYMENT & CONFIRMATION               -->
+    <!-- ============================================ -->
+
+    <!-- SECTION 8: PAYMENT -->
+    <section class="section" id="section8">
+      <div class="section-header">
+        <h2>8. Payment Section</h2>
+        <p>Stripe Elements for card, invoice option for business accounts</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex:2">
+          <div class="wireframe-label">Desktop — Payment Step <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+              <div class="wf-cart-icon">🛒<span class="wf-cart-badge">2</span></div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+              <div class="wf-progress-line done"></div>
+              <div class="wf-progress-step active"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+
+            <div class="checkout-layout">
+              <div class="checkout-main">
+
+                <!-- Contact (collapsed) -->
+                <div class="form-section">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <h3 style="color:#16a34a">✓ 1. Contact Details</h3>
+                    <a href="#" style="color:#c41e3a;font-size:.85rem">Edit</a>
+                  </div>
+                  <p style="font-size:.9rem;color:#666;margin-top:5px">Sarah Johnson · sarah@email.com</p>
+                </div>
+
+                <!-- Participants (collapsed) -->
+                <div class="form-section">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <h3 style="color:#16a34a">✓ 2. Participants</h3>
+                    <a href="#" style="color:#c41e3a;font-size:.85rem">Edit</a>
+                  </div>
+                  <p style="font-size:.9rem;color:#666;margin-top:5px">2 students enrolled across 2 courses</p>
+                </div>
+
+                <!-- Payment (active) -->
+                <div class="form-section">
+                  <h3>3. Payment</h3>
+
+                  <div class="radio-option selected">
+                    <input type="radio" name="payment" checked>
+                    <div class="radio-option-content">
+                      <div class="radio-option-title">💳 Pay by Card</div>
+                      <div class="radio-option-desc">Secure payment via Stripe</div>
+                    </div>
+                  </div>
+
+                  <div class="radio-option">
+                    <input type="radio" name="payment">
+                    <div class="radio-option-content">
+                      <div class="radio-option-title">📄 Request Invoice</div>
+                      <div class="radio-option-desc">Pay within 14 days · Business accounts only</div>
+                    </div>
+                  </div>
+
+                  <!-- Stripe Elements placeholder -->
+                  <div style="margin-top:20px">
+                    <label style="display:block;font-size:.85rem;font-weight:500;margin-bottom:8px;color:#555">Card Details</label>
+                    <div class="stripe-element">
+                      <span>💳 Stripe Card Element renders here</span>
+                    </div>
+                    <p style="font-size:.75rem;color:#999;margin-top:8px">🔒 Secured by Stripe. We never store your card details.</p>
+                  </div>
+
+                  <!-- T&Cs -->
+                  <div class="checkbox-row" style="margin-top:25px">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Cancellation Policy</a></label>
+                  </div>
+
+                  <button class="btn btn-primary btn-large btn-full" style="margin-top:20px">
+                    Complete Booking — $209
+                  </button>
+
+                  <p style="text-align:center;font-size:.85rem;color:#666;margin-top:15px">
+                    You'll receive confirmation at sarah@email.com
+                  </p>
+                </div>
+              </div>
+
+              <!-- Sidebar -->
+              <div class="checkout-sidebar">
+                <h4 style="margin-bottom:15px;font-size:1rem">Order Summary</h4>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Provide CPR</div>
+                    <div class="summary-detail">Mon 13 Jan · Caulfield</div>
+                    <div style="margin-top:5px">
+                      <span style="font-size:.75rem;background:#f3f4f6;padding:2px 6px;border-radius:3px">Sarah J.</span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$89</div>
+                </div>
+
+                <div class="summary-item">
+                  <div>
+                    <div class="summary-course">Fire Warden</div>
+                    <div class="summary-detail">Wed 15 Jan · CBD</div>
+                    <div style="margin-top:5px">
+                      <span style="font-size:.75rem;background:#f3f4f6;padding:2px 6px;border-radius:3px">Sarah J.</span>
+                      <span style="font-size:.75rem;background:#f3f4f6;padding:2px 6px;border-radius:3px;margin-left:3px">John S.</span>
+                    </div>
+                  </div>
+                  <div class="summary-price">$240</div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.9rem;color:#666">
+                  <span>Subtotal</span>
+                  <span>$329</span>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.9rem;color:#16a34a">
+                  <span>Discount (SAVE20)</span>
+                  <span>-$66</span>
+                </div>
+
+                <div class="summary-total">
+                  <span>Total</span>
+                  <span>$263</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong>Payment options:</strong> Card (Stripe) or Invoice (business only). T&Cs checkbox required. Button shows total amount. Sidebar shows enrolled students per course.
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding:12px 15px">
+              <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+              <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">2</span></div>
+            </div>
+
+            <div style="padding:15px;max-height:380px;overflow-y:auto">
+              <h3 style="font-size:1rem;margin-bottom:15px">3. Payment</h3>
+
+              <div class="radio-option selected" style="padding:12px;margin-bottom:8px">
+                <input type="radio" name="mpay" checked style="width:18px;height:18px">
+                <div class="radio-option-content">
+                  <div class="radio-option-title" style="font-size:.9rem">💳 Pay by Card</div>
+                </div>
+              </div>
+
+              <div class="radio-option" style="padding:12px;margin-bottom:15px">
+                <input type="radio" name="mpay" style="width:18px;height:18px">
+                <div class="radio-option-content">
+                  <div class="radio-option-title" style="font-size:.9rem">📄 Invoice</div>
+                </div>
+              </div>
+
+              <div class="stripe-element" style="padding:12px;margin-bottom:15px">
+                <span style="font-size:.8rem">💳 Card element</span>
+              </div>
+
+              <div class="checkbox-row" style="margin:15px 0">
+                <input type="checkbox" style="width:18px;height:18px">
+                <label style="font-size:.8rem">I agree to the <a href="#" style="color:#c41e3a">Terms</a></label>
+              </div>
+            </div>
+
+            <div style="border-top:2px solid #eee;padding:12px 15px;background:#f9f9f9">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="font-size:.9rem">Total</span>
+                <span style="font-weight:700;font-size:1.1rem">$263</span>
+              </div>
+              <button class="btn btn-primary btn-full" style="padding:14px">Complete Booking</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8b: INVOICE OPTION -->
+    <section class="section" id="section8b">
+      <div class="section-header">
+        <h2>8b. Invoice Option Selected</h2>
+        <p>For business accounts — shows PO number field</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Invoice Flow <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box" style="padding:25px">
+            <div class="radio-option">
+              <input type="radio" name="pay2">
+              <div class="radio-option-content">
+                <div class="radio-option-title">💳 Pay by Card</div>
+                <div class="radio-option-desc">Secure payment via Stripe</div>
+              </div>
+            </div>
+
+            <div class="radio-option selected">
+              <input type="radio" name="pay2" checked>
+              <div class="radio-option-content">
+                <div class="radio-option-title">📄 Request Invoice</div>
+                <div class="radio-option-desc">Pay within 14 days · Business accounts only</div>
+              </div>
+            </div>
+
+            <div style="background:#f0f9ff;border:2px solid #bae6fd;border-radius:8px;padding:20px;margin-top:15px">
+              <h4 style="font-size:.95rem;margin-bottom:15px;color:#0369a1">Invoice Details</h4>
+
+              <div style="margin-bottom:15px">
+                <label style="display:block;font-size:.85rem;font-weight:500;margin-bottom:5px">Invoice will be sent to:</label>
+                <div style="background:#fff;padding:10px 12px;border-radius:6px;border:1px solid #ddd;font-size:.9rem">sarah@acme.com</div>
+              </div>
+
+              <div style="margin-bottom:15px">
+                <label style="display:block;font-size:.85rem;font-weight:500;margin-bottom:5px">Company Name</label>
+                <div style="background:#fff;padding:10px 12px;border-radius:6px;border:1px solid #ddd;font-size:.9rem">Acme Corporation</div>
+              </div>
+
+              <div>
+                <label style="display:block;font-size:.85rem;font-weight:500;margin-bottom:5px">PO Number <span style="color:#999;font-weight:400">(optional)</span></label>
+                <input type="text" placeholder="e.g. PO-12345" style="width:100%;padding:10px 12px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+              </div>
+
+              <p style="font-size:.8rem;color:#666;margin-top:15px">
+                ℹ️ Invoice will be emailed within 24 hours. Payment due within 14 days.
+              </p>
+            </div>
+
+            <button class="btn btn-primary btn-full" style="margin-top:20px">
+              Confirm Booking & Request Invoice
+            </button>
+          </div>
+          <div class="annotation">
+            <strong>Invoice flow:</strong> Only available for Business accounts (from Contact step). Shows company details pulled from earlier. Optional PO number for corporate tracking. Different CTA text.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: CONFIRMATION -->
+    <section class="section" id="section9">
+      <div class="section-header">
+        <h2>9. Confirmation / Thank You Page</h2>
+        <p>Booking complete — summary and next steps</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex:2">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+              <a href="#" style="color:#c41e3a;text-decoration:none;font-size:.9rem">Book Another Course</a>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+              <div class="wf-progress-line done"></div>
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Checkout</span></div>
+              <div class="wf-progress-line done"></div>
+              <div class="wf-progress-step complete"><div class="dot">✓</div><span>Confirmation</span></div>
+            </div>
+
+            <div style="max-width:700px;margin:0 auto;padding:40px">
+
+              <div class="confirmation-header">
+                <div class="success-icon">✓</div>
+                <h1 style="font-size:1.8rem;margin-bottom:10px;color:#333">Booking Confirmed!</h1>
+                <p style="color:#666;margin-bottom:15px">Confirmation sent to sarah@email.com</p>
+                <div class="booking-ref">REF: RR-2026-0113-4521</div>
+              </div>
+
+              <!-- Course 1 -->
+              <div class="confirmation-card">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:15px">
+                  <div>
+                    <h3 style="font-size:1.1rem;margin-bottom:5px">Provide CPR</h3>
+                    <div style="font-size:.9rem;color:#666">HLTAID009</div>
+                  </div>
+                  <span style="background:#dcfce7;color:#166534;padding:4px 10px;border-radius:4px;font-size:.8rem;font-weight:600">CONFIRMED</span>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:15px">
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Date</div>
+                    <div style="font-weight:600">Mon 13 January 2026</div>
+                  </div>
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Time</div>
+                    <div style="font-weight:600">9:00am - 12:30pm</div>
+                  </div>
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Location</div>
+                    <div style="font-weight:600">Caulfield South</div>
+                  </div>
+                </div>
+
+                <div style="background:#f9f9f9;border-radius:6px;padding:12px">
+                  <div style="font-size:.8rem;color:#666;margin-bottom:8px">Student enrolled:</div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:32px;height:32px;background:#c41e3a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600">SJ</div>
+                    <div>
+                      <div style="font-weight:600;font-size:.9rem">Sarah Johnson</div>
+                      <div style="font-size:.8rem;color:#666">sarah@email.com</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Course 2 -->
+              <div class="confirmation-card">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:15px">
+                  <div>
+                    <h3 style="font-size:1.1rem;margin-bottom:5px">Fire Warden Training</h3>
+                    <div style="font-size:.9rem;color:#666">PUAFIR001</div>
+                  </div>
+                  <span style="background:#dcfce7;color:#166534;padding:4px 10px;border-radius:4px;font-size:.8rem;font-weight:600">CONFIRMED</span>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:15px">
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Date</div>
+                    <div style="font-weight:600">Wed 15 January 2026</div>
+                  </div>
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Time</div>
+                    <div style="font-weight:600">1:00pm - 4:00pm</div>
+                  </div>
+                  <div>
+                    <div style="font-size:.75rem;color:#999;text-transform:uppercase;margin-bottom:3px">Location</div>
+                    <div style="font-weight:600">Melbourne CBD</div>
+                  </div>
+                </div>
+
+                <div style="background:#f9f9f9;border-radius:6px;padding:12px">
+                  <div style="font-size:.8rem;color:#666;margin-bottom:8px">Students enrolled:</div>
+                  <div style="display:flex;gap:20px">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div style="width:28px;height:28px;background:#c41e3a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600">SJ</div>
+                      <span style="font-size:.85rem">Sarah J.</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div style="width:28px;height:28px;background:#6366f1;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600">JS</div>
+                      <span style="font-size:.85rem">John S.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- What happens next -->
+              <div style="background:#f0f9ff;border:2px solid #bae6fd;border-radius:12px;padding:25px;margin-top:25px">
+                <h3 style="font-size:1rem;margin-bottom:15px;color:#0369a1">📋 What happens next?</h3>
+                <ul style="list-style:none;font-size:.9rem;color:#555">
+                  <li style="margin-bottom:10px;padding-left:25px;position:relative">
+                    <span style="position:absolute;left:0">1.</span>
+                    <strong>Confirmation email</strong> sent to all enrolled students with course details
+                  </li>
+                  <li style="margin-bottom:10px;padding-left:25px;position:relative">
+                    <span style="position:absolute;left:0">2.</span>
+                    <strong>Pre-course work</strong> — students will receive login details for online modules (if applicable)
+                  </li>
+                  <li style="margin-bottom:10px;padding-left:25px;position:relative">
+                    <span style="position:absolute;left:0">3.</span>
+                    <strong>Reminder</strong> sent 48 hours before each course
+                  </li>
+                  <li style="padding-left:25px;position:relative">
+                    <span style="position:absolute;left:0">4.</span>
+                    <strong>Certificates</strong> issued within 24 hours of course completion
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Actions -->
+              <div style="display:flex;gap:15px;margin-top:30px;justify-content:center">
+                <button class="btn btn-primary">Add to Calendar</button>
+                <button class="btn btn-secondary">Print Confirmation</button>
+              </div>
+
+              <!-- Payment summary -->
+              <div style="background:#f9f9f9;border-radius:8px;padding:20px;margin-top:30px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                  <span style="color:#666">Subtotal</span>
+                  <span>$329</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:10px;color:#16a34a">
+                  <span>Discount (SAVE20)</span>
+                  <span>-$66</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;padding-top:10px;border-top:2px solid #ddd">
+                  <span>Total Paid</span>
+                  <span>$263</span>
+                </div>
+                <div style="text-align:center;margin-top:10px;font-size:.8rem;color:#666">
+                  Paid by Visa ending in 4242
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding:12px 15px">
+              <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+              <a href="#" style="color:#c41e3a;text-decoration:none;font-size:.8rem">Book More</a>
+            </div>
+
+            <div style="padding:20px;text-align:center;max-height:420px;overflow-y:auto">
+              <div class="success-icon" style="width:60px;height:60px;font-size:1.8rem;margin-bottom:15px">✓</div>
+              <h1 style="font-size:1.3rem;margin-bottom:8px">Booking Confirmed!</h1>
+              <p style="color:#666;font-size:.85rem;margin-bottom:10px">Confirmation sent to sarah@email.com</p>
+              <div class="booking-ref" style="font-size:.85rem;padding:6px 12px">REF: RR-2026-0113-4521</div>
+
+              <!-- Course cards -->
+              <div style="text-align:left;margin-top:20px">
+                <div class="confirmation-card" style="padding:12px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <h3 style="font-size:.95rem">Provide CPR</h3>
+                    <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:600">✓</span>
+                  </div>
+                  <div style="font-size:.8rem;color:#666">Mon 13 Jan · 9:00am</div>
+                  <div style="font-size:.8rem;color:#666">Caulfield South</div>
+                  <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
+                    <div style="width:22px;height:22px;background:#c41e3a;color:#fff;border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center">SJ</div>
+                    <span style="font-size:.8rem">Sarah J.</span>
+                  </div>
+                </div>
+
+                <div class="confirmation-card" style="padding:12px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <h3 style="font-size:.95rem">Fire Warden</h3>
+                    <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:600">✓</span>
+                  </div>
+                  <div style="font-size:.8rem;color:#666">Wed 15 Jan · 1:00pm</div>
+                  <div style="font-size:.8rem;color:#666">Melbourne CBD</div>
+                  <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
+                    <div style="width:22px;height:22px;background:#c41e3a;color:#fff;border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center">SJ</div>
+                    <div style="width:22px;height:22px;background:#6366f1;color:#fff;border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center">JS</div>
+                    <span style="font-size:.8rem">2 students</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="background:#f9f9f9;border-radius:8px;padding:12px;margin-top:15px;text-align:center">
+                <div style="font-weight:700;font-size:1.1rem">Total Paid: $263</div>
+                <div style="font-size:.75rem;color:#666">Visa •••• 4242</div>
+              </div>
+
+              <button class="btn btn-primary btn-full" style="margin-top:15px;padding:12px">Add to Calendar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SUMMARY                                      -->
+    <!-- ============================================ -->
+
+    <section class="section">
+      <div class="section-header" style="background:#16a34a">
+        <h2>✓ Complete Booking Journey</h2>
+        <p>All screens from entry to confirmation</p>
+      </div>
+      <div class="wireframe-row">
+        <div style="width:100%">
+          <h3 style="margin-bottom:20px">Full User Flow</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <div style="background:#f3f4f6;padding:10px 15px;border-radius:6px;font-size:.85rem"><strong>0.</strong> Cold Start</div>
+            <span style="color:#999">→</span>
+            <div style="background:#f3f4f6;padding:10px 15px;border-radius:6px;font-size:.85rem"><strong>0b.</strong> Course Grid</div>
+            <span style="color:#999">→</span>
+            <div style="background:#f3f4f6;padding:10px 15px;border-radius:6px;font-size:.85rem"><strong>1.</strong> Session Drawer</div>
+            <span style="color:#999">→</span>
+            <div style="background:#f3f4f6;padding:10px 15px;border-radius:6px;font-size:.85rem"><strong>Toast</strong> Added</div>
+            <span style="color:#999">→</span>
+            <div style="background:#fef3c7;padding:10px 15px;border-radius:6px;font-size:.85rem;border:2px solid #fcd34d"><strong>5.</strong> Attending?</div>
+            <span style="color:#999">→</span>
+            <div style="background:#fef3c7;padding:10px 15px;border-radius:6px;font-size:.85rem;border:2px solid #fcd34d"><strong>6.</strong> Contact</div>
+            <span style="color:#999">→</span>
+            <div style="background:#fef3c7;padding:10px 15px;border-radius:6px;font-size:.85rem;border:2px solid #fcd34d"><strong>7.</strong> Participants</div>
+            <span style="color:#999">→</span>
+            <div style="background:#dbeafe;padding:10px 15px;border-radius:6px;font-size:.85rem;border:2px solid #93c5fd"><strong>8.</strong> Payment</div>
+            <span style="color:#999">→</span>
+            <div style="background:#dcfce7;padding:10px 15px;border-radius:6px;font-size:.85rem;border:2px solid #86efac"><strong>9.</strong> Confirmation</div>
+          </div>
+
+          <div class="annotation" style="margin-top:20px">
+            <strong>This file combines all wireframes:</strong> Entry screens (0, 0b, 0c, 0d) + Checkout flow (5, 6, 6b, 7, 7b) + Payment & Confirmation (8, 8b, 9)
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
