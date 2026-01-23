@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Response Booking Form - Wireframes v4</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #c41e3a;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-header {
+      background: #c41e3a;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .section-header h2 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .section-header p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    .wireframe-row {
+      display: flex;
+      gap: 30px;
+      background: white;
+      padding: 30px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .wireframe {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .wireframe.full-width {
+      flex: 100%;
+      min-width: 100%;
+    }
+
+    .wireframe.mobile-fixed {
+      flex: 0 0 auto;
+      min-width: auto;
+    }
+
+    .wireframe-label {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #666;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .wireframe-box {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+      overflow: hidden;
+    }
+
+    /* Drawer header */
+    .wf-drawer-header {
+      background: #c41e3a;
+      color: white;
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .wf-drawer-header h4 {
+      font-size: 1.15rem;
+      margin-bottom: 5px;
+    }
+
+    .wf-drawer-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .wf-close {
+      font-size: 1.6rem;
+      cursor: pointer;
+      opacity: 0.8;
+      line-height: 1;
+    }
+
+    .wf-drawer-toggle {
+      display: flex;
+      border-bottom: 2px solid #eee;
+    }
+
+    .wf-toggle-btn {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.9rem;
+      background: #f8f8f8;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .wf-toggle-btn.active {
+      background: white;
+      font-weight: 600;
+      color: #c41e3a;
+    }
+
+    /* Compact session row */
+    .wf-session-compact {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background 0.15s;
+      gap: 15px;
+    }
+
+    .wf-session-compact:hover {
+      background: #f9f9f9;
+    }
+
+    .wf-session-compact.selected {
+      background: #fff5f5;
+      border-left: 4px solid #c41e3a;
+      padding-left: 16px;
+    }
+
+    .wf-session-compact .date-block {
+      text-align: center;
+      min-width: 50px;
+      padding: 8px;
+      background: #f5f5f5;
+      border-radius: 6px;
+    }
+
+    .wf-session-compact .date-block .day {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1;
+    }
+
+    .wf-session-compact .date-block .month {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    .wf-session-compact .details {
+      flex: 1;
+    }
+
+    .wf-session-compact .details .title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .wf-session-compact .details .time-loc {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .wf-session-compact .price-avail {
+      text-align: right;
+      min-width: 80px;
+    }
+
+    .wf-session-compact .price-avail .price {
+      font-weight: 700;
+      color: #c41e3a;
+      font-size: 0.95rem;
+    }
+
+    .wf-session-compact .price-avail .avail {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .wf-session-compact .price-avail .avail.low {
+      color: #e65100;
+      font-weight: 600;
+    }
+
+    /* Tags */
+    .tag-express {
+      background: #e3f2fd;
+      color: #1565c0;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    .tag-online {
+      background: #f3f4f6;
+      color: #4b5563;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    /* Button */
+    .wf-button {
+      background: #c41e3a;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .wf-drawer-footer {
+      padding: 18px 25px;
+      border-top: 2px solid #eee;
+      background: #fafafa;
+    }
+
+    /* Annotation */
+    .annotation {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #92400e;
+    }
+
+    /* Mobile wireframe */
+    .wf-mobile {
+      width: 320px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: #c41e3a;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .device-label {
+      display: inline-block;
+      background: #e5e7eb;
+      color: #374151;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 8px;
+      text-transform: uppercase;
+    }
+
+    /* Calendar styles */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+    }
+
+    .calendar-day-header {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #666;
+      padding: 8px;
+    }
+
+    .calendar-day-header.weekend {
+      color: #999;
+    }
+
+    .calendar-day {
+      padding: 12px 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .calendar-day.other-month {
+      color: #ccc;
+    }
+
+    .calendar-day.weekend {
+      color: #999;
+    }
+
+    .calendar-day.selected {
+      background: #fff5f5;
+      border-radius: 6px;
+      border: 2px solid #c41e3a;
+    }
+
+    .calendar-day .dots {
+      display: flex;
+      gap: 3px;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    .calendar-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .calendar-dot.in-person {
+      background: #c41e3a;
+    }
+
+    .calendar-dot.online {
+      background: #1976d2;
+    }
+
+    .calendar-dot.full {
+      background: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Real Response Booking Form <span class="version-badge">v4</span></h1>
+    <p class="subtitle">Session selection: list view, calendar view, online postcode validation, multi-day courses</p>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: LIST VIEW -->
+    <!-- ============================================ -->
+    <section class="section" id="section1">
+      <div class="section-header">
+        <h2>1. List View — Session Selection</h2>
+        <p>Compact list with online sessions indicated by tag only (no background tint)</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Provide CPR</h4>
+                <div class="wf-drawer-subtitle">HLTAID009 · Melbourne · 8 sessions</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active">LIST</button>
+              <button class="wf-toggle-btn">CALENDAR</button>
+            </div>
+
+            <!-- Filter row -->
+            <div style="padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #eee; display: flex; gap: 15px; align-items: center;">
+              <span style="font-size: 0.85rem; color: #666;">Show:</span>
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <input type="checkbox" checked> In-person
+              </label>
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <input type="checkbox" checked> Online
+              </label>
+            </div>
+
+            <div style="max-height: 340px; overflow-y: auto;">
+
+              <div class="wf-session-compact selected">
+                <div class="date-block">
+                  <div class="day">13</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR</div>
+                  <div class="time-loc">9:00am - 12:30pm · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail low">3 left</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block">
+                  <div class="day">14</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-online">ONLINE</span></div>
+                  <div class="time-loc">10:00am - 1:30pm · Live virtual session</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">20 spots</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block">
+                  <div class="day">15</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-express">EXPRESS</span></div>
+                  <div class="time-loc">9:00am - 10:30am · Melbourne CBD</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">8 spots</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block">
+                  <div class="day">16</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-online">ONLINE</span></div>
+                  <div class="time-loc">2:00pm - 5:30pm · Live virtual session</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">18 spots</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block">
+                  <div class="day">17</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR</div>
+                  <div class="time-loc">1:00pm - 4:30pm · Richmond</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">12 spots</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block">
+                  <div class="day">20</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-express">EXPRESS</span></div>
+                  <div class="time-loc">9:00am - 10:30am · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">15 spots</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Provide CPR</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">Melbourne · 8 sessions</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+
+            <div style="padding: 8px 12px; background: #f9f9f9; border-bottom: 1px solid #eee; display: flex; gap: 12px; font-size: 0.75rem;">
+              <label style="display: flex; align-items: center; gap: 4px;"><input type="checkbox" checked style="width: 14px; height: 14px;"> In-person</label>
+              <label style="display: flex; align-items: center; gap: 4px;"><input type="checkbox" checked style="width: 14px; height: 14px;"> Online</label>
+            </div>
+
+            <div style="max-height: 260px; overflow-y: auto;">
+
+              <div class="wf-session-compact selected" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">13</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">Provide CPR</div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                  <div class="avail low" style="font-size: 0.7rem;">3 left</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">14</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">CPR <span class="tag-online" style="font-size: 0.6rem; padding: 2px 5px;">ONLINE</span></div>
+                  <div class="time-loc" style="font-size: 0.75rem;">10:00am · Virtual</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                  <div class="avail" style="font-size: 0.7rem;">20</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">15</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">CPR <span class="tag-express" style="font-size: 0.6rem; padding: 2px 5px;">EXPRESS</span></div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · CBD</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                  <div class="avail" style="font-size: 0.7rem;">8</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">16</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">CPR <span class="tag-online" style="font-size: 0.6rem; padding: 2px 5px;">ONLINE</span></div>
+                  <div class="time-loc" style="font-size: 0.75rem;">2:00pm · Virtual</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                  <div class="avail" style="font-size: 0.7rem;">18</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">17</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">Provide CPR</div>
+                  <div class="time-loc" style="font-size: 0.75rem;">1:00pm · Richmond</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                  <div class="avail" style="font-size: 0.7rem;">12</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer" style="padding: 12px 15px;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: CALENDAR VIEW -->
+    <!-- ============================================ -->
+    <section class="section" id="section2">
+      <div class="section-header">
+        <h2>2. Calendar View — Session Selection</h2>
+        <p>Red dots for in-person, blue dots for online</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Provide CPR</h4>
+                <div class="wf-drawer-subtitle">HLTAID009 · Melbourne</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn">LIST</button>
+              <button class="wf-toggle-btn active">CALENDAR</button>
+            </div>
+
+            <!-- Calendar controls -->
+            <div style="padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <button style="background: #f0f0f0; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: inherit;">← Prev</button>
+                <span style="font-weight: 600; font-size: 1.1rem;">January 2026</span>
+                <button style="background: #f0f0f0; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: inherit;">Next →</button>
+              </div>
+            </div>
+
+            <!-- Legend -->
+            <div style="padding: 10px 20px; background: #f9f9f9; border-bottom: 1px solid #eee; display: flex; gap: 20px; font-size: 0.8rem;">
+              <span><span style="display: inline-block; width: 10px; height: 10px; background: #c41e3a; border-radius: 50%; margin-right: 5px;"></span> In-person</span>
+              <span><span style="display: inline-block; width: 10px; height: 10px; background: #1976d2; border-radius: 50%; margin-right: 5px;"></span> Online</span>
+              <span><span style="display: inline-block; width: 10px; height: 10px; background: #e0e0e0; border-radius: 50%; margin-right: 5px;"></span> Full</span>
+            </div>
+
+            <!-- Calendar grid -->
+            <div style="padding: 20px;">
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; margin-bottom: 10px;">
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">MON</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">TUE</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">WED</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">THU</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">FRI</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #999; padding: 8px;">SAT</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #999; padding: 8px;">SUN</div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
+                <!-- Week 1 -->
+                <div style="padding: 12px 5px; color: #ccc; font-size: 0.9rem;">30</div>
+                <div style="padding: 12px 5px; color: #ccc; font-size: 0.9rem;">31</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">1</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">2</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">3</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">4</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">5</div>
+
+                <!-- Week 2 -->
+                <div style="padding: 12px 5px; font-size: 0.9rem;">6</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">7</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">8</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">9</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">10</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">11</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">12</div>
+
+                <!-- Week 3 -->
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  13
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #c41e3a; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  14
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #1976d2; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer; background: #fff5f5; border-radius: 6px; border: 2px solid #c41e3a;">
+                  <strong>15</strong>
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #c41e3a; border-radius: 50%;"></span>
+                    <span style="width: 8px; height: 8px; background: #1976d2; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  16
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #1976d2; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  17
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #c41e3a; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">18</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">19</div>
+
+                <!-- Week 4 -->
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  20
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #c41e3a; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">21</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">22</div>
+                <div style="padding: 8px 5px; font-size: 0.9rem; cursor: pointer;">
+                  23
+                  <div style="display: flex; gap: 3px; justify-content: center; margin-top: 4px;">
+                    <span style="width: 8px; height: 8px; background: #e0e0e0; border-radius: 50%;"></span>
+                  </div>
+                </div>
+                <div style="padding: 12px 5px; font-size: 0.9rem;">24</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">25</div>
+                <div style="padding: 12px 5px; font-size: 0.9rem; color: #999;">26</div>
+              </div>
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Provide CPR</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">Melbourne</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+
+            <!-- Mobile calendar nav -->
+            <div style="padding: 10px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+              <button style="background: #f0f0f0; border: none; padding: 5px 8px; border-radius: 4px; font-size: 0.8rem; font-family: inherit; cursor: pointer;">←</button>
+              <span style="font-weight: 600; font-size: 0.9rem;">Jan 13 - 19, 2026</span>
+              <button style="background: #f0f0f0; border: none; padding: 5px 8px; border-radius: 4px; font-size: 0.8rem; font-family: inherit; cursor: pointer;">→</button>
+            </div>
+
+            <!-- Legend -->
+            <div style="padding: 8px 12px; background: #f9f9f9; border-bottom: 1px solid #eee; display: flex; gap: 12px; font-size: 0.7rem;">
+              <span><span style="display: inline-block; width: 8px; height: 8px; background: #c41e3a; border-radius: 50%; margin-right: 4px;"></span>In-person</span>
+              <span><span style="display: inline-block; width: 8px; height: 8px; background: #1976d2; border-radius: 50%; margin-right: 4px;"></span>Online</span>
+              <span><span style="display: inline-block; width: 8px; height: 8px; background: #e0e0e0; border-radius: 50%; margin-right: 4px;"></span>Full</span>
+            </div>
+
+            <!-- Week strip -->
+            <div style="display: flex; border-bottom: 1px solid #eee;">
+              <div style="flex: 1; text-align: center; padding: 10px 2px; cursor: pointer;">
+                <div style="font-size: 0.6rem; color: #999;">MON</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">13</div>
+                <div style="display: flex; justify-content: center; margin-top: 2px;">
+                  <span style="width: 6px; height: 6px; background: #c41e3a; border-radius: 50%;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; cursor: pointer;">
+                <div style="font-size: 0.6rem; color: #999;">TUE</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">14</div>
+                <div style="display: flex; justify-content: center; margin-top: 2px;">
+                  <span style="width: 6px; height: 6px; background: #1976d2; border-radius: 50%;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; cursor: pointer; background: #fff5f5; border-bottom: 2px solid #c41e3a;">
+                <div style="font-size: 0.6rem; color: #c41e3a; font-weight: 600;">WED</div>
+                <div style="font-size: 0.9rem; margin: 2px 0; font-weight: 600; color: #c41e3a;">15</div>
+                <div style="display: flex; justify-content: center; gap: 2px; margin-top: 2px;">
+                  <span style="width: 6px; height: 6px; background: #c41e3a; border-radius: 50%;"></span>
+                  <span style="width: 6px; height: 6px; background: #1976d2; border-radius: 50%;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; cursor: pointer;">
+                <div style="font-size: 0.6rem; color: #999;">THU</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">16</div>
+                <div style="display: flex; justify-content: center; margin-top: 2px;">
+                  <span style="width: 6px; height: 6px; background: #1976d2; border-radius: 50%;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; cursor: pointer;">
+                <div style="font-size: 0.6rem; color: #999;">FRI</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">17</div>
+                <div style="display: flex; justify-content: center; margin-top: 2px;">
+                  <span style="width: 6px; height: 6px; background: #c41e3a; border-radius: 50%;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; opacity: 0.5;">
+                <div style="font-size: 0.6rem; color: #999;">SAT</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">18</div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 2px; opacity: 0.5;">
+                <div style="font-size: 0.6rem; color: #999;">SUN</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">19</div>
+              </div>
+            </div>
+
+            <!-- Sessions for selected day -->
+            <div style="padding: 12px; flex: 1; overflow-y: auto;">
+              <div style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Wednesday 15 January — 2 sessions</div>
+
+              <div style="background: white; border: 2px solid #c41e3a; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem;">Provide CPR</div>
+                    <div style="font-size: 0.75rem; color: #666;">9:00am · Melbourne CBD</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a;">$89</div>
+                    <div style="font-size: 0.7rem; color: #666;">8 spots</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem;">CPR <span class="tag-online" style="font-size: 0.6rem;">ONLINE</span></div>
+                    <div style="font-size: 0.75rem; color: #666;">2:00pm · Virtual</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a;">$89</div>
+                    <div style="font-size: 0.7rem; color: #666;">15 spots</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-drawer-footer" style="padding: 12px 15px;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: ONLINE POSTCODE VALIDATION -->
+    <!-- ============================================ -->
+    <section class="section" id="section3">
+      <div class="section-header">
+        <h2>3. Online Session — Postcode Validation</h2>
+        <p>When user selects an online session, prompt for postcode to confirm equipment delivery</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP: Postcode prompt -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Postcode Prompt <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Provide CPR</h4>
+                <div class="wf-drawer-subtitle">HLTAID009 · Melbourne</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active">LIST</button>
+              <button class="wf-toggle-btn">CALENDAR</button>
+            </div>
+
+            <div style="max-height: 340px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="opacity: 0.5;">
+                <div class="date-block">
+                  <div class="day">13</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR</div>
+                  <div class="time-loc">9:00am - 12:30pm · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail low">3 left</div>
+                </div>
+              </div>
+
+              <!-- Selected with postcode prompt expanded -->
+              <div style="margin: 4px 12px; border: 2px solid #1976d2; border-radius: 8px; overflow: hidden;">
+                <div class="wf-session-compact" style="background: #f0f7ff; border: none; margin: 0;">
+                  <div class="date-block">
+                    <div class="day">14</div>
+                    <div class="month">Jan</div>
+                  </div>
+                  <div class="details">
+                    <div class="title">Provide CPR <span class="tag-online">ONLINE</span></div>
+                    <div class="time-loc">10:00am - 1:30pm · Live virtual session</div>
+                  </div>
+                  <div class="price-avail">
+                    <div class="price">$89</div>
+                    <div class="avail">20 spots</div>
+                  </div>
+                </div>
+
+                <!-- Postcode input area -->
+                <div style="padding: 16px 20px; background: #fff; border-top: 1px solid #e0e0e0;">
+                  <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 8px;">Equipment delivery</div>
+                  <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Enter your postcode to confirm we can deliver equipment in time.</div>
+                  <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Postcode" style="flex: 1; padding: 12px 15px; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit;" value="3000">
+                    <button style="background: #1976d2; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: inherit;">Check</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="opacity: 0.5;">
+                <div class="date-block">
+                  <div class="day">15</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-express">EXPRESS</span></div>
+                  <div class="time-loc">9:00am - 10:30am · Melbourne CBD</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">8 spots</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button" style="opacity: 0.5;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE: Postcode prompt -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Postcode Prompt <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Provide CPR</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">Melbourne</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+            <div style="max-height: 300px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px; opacity: 0.5;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">13</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">Provide CPR</div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                </div>
+              </div>
+
+              <!-- Selected online with postcode prompt -->
+              <div style="margin: 4px 8px; border: 2px solid #1976d2; border-radius: 8px; overflow: hidden;">
+                <div style="padding: 10px 12px; background: #f0f7ff; display: flex; align-items: center; gap: 10px;">
+                  <div style="text-align: center; min-width: 38px; padding: 5px; background: #e0e7ff; border-radius: 4px;">
+                    <div style="font-size: 0.95rem; font-weight: 700;">14</div>
+                    <div style="font-size: 0.55rem; color: #666;">Jan</div>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 600; font-size: 0.8rem;">CPR <span class="tag-online" style="font-size: 0.55rem;">ONLINE</span></div>
+                    <div style="font-size: 0.7rem; color: #666;">10:00am · Virtual</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a; font-size: 0.85rem;">$89</div>
+                  </div>
+                </div>
+                <div style="padding: 12px; background: white; border-top: 1px solid #e0e0e0;">
+                  <div style="font-weight: 600; font-size: 0.8rem; margin-bottom: 6px;">Confirm delivery</div>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="text" placeholder="Postcode" style="flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 0.9rem; font-family: inherit;">
+                    <button style="background: #1976d2; color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; font-family: inherit; cursor: pointer;">Check</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px; opacity: 0.5;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">15</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">CPR <span class="tag-express" style="font-size: 0.6rem;">EXPRESS</span></div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · CBD</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                </div>
+              </div>
+
+            </div>
+            <div style="padding: 12px 15px; border-top: 2px solid #eee; background: #fafafa;">
+              <button class="wf-button" style="padding: 14px; opacity: 0.5;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3b: DELIVERY SUCCESS -->
+    <!-- ============================================ -->
+    <section class="section" id="section3b">
+      <div class="section-header">
+        <h2>3b. Online Session — Delivery Confirmed</h2>
+        <p>Postcode validated successfully</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP: Success -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Delivery Confirmed <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Provide CPR</h4>
+                <div class="wf-drawer-subtitle">HLTAID009 · Melbourne</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active">LIST</button>
+              <button class="wf-toggle-btn">CALENDAR</button>
+            </div>
+
+            <div style="max-height: 340px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="opacity: 0.5;">
+                <div class="date-block">
+                  <div class="day">13</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR</div>
+                  <div class="time-loc">9:00am - 12:30pm · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail low">3 left</div>
+                </div>
+              </div>
+
+              <!-- Selected with success message -->
+              <div style="margin: 4px 12px; border: 2px solid #16a34a; border-radius: 8px; overflow: hidden;">
+                <div class="wf-session-compact" style="background: #f0fdf4; border: none; margin: 0;">
+                  <div class="date-block" style="background: #dcfce7;">
+                    <div class="day">14</div>
+                    <div class="month">Jan</div>
+                  </div>
+                  <div class="details">
+                    <div class="title">Provide CPR <span class="tag-online">ONLINE</span></div>
+                    <div class="time-loc">10:00am - 1:30pm · Live virtual session</div>
+                  </div>
+                  <div class="price-avail">
+                    <div class="price">$89</div>
+                    <div class="avail">20 spots</div>
+                  </div>
+                </div>
+
+                <!-- Success message -->
+                <div style="padding: 12px 20px; background: #f0fdf4; border-top: 1px solid #bbf7d0;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #16a34a; font-size: 1.2rem;">&#10003;</span>
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.9rem; color: #166534;">Equipment delivery confirmed</div>
+                      <div style="font-size: 0.8rem; color: #666;">Delivers to 3000 by Sun 12 Jan</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="opacity: 0.5;">
+                <div class="date-block">
+                  <div class="day">15</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR <span class="tag-express">EXPRESS</span></div>
+                  <div class="time-loc">9:00am - 10:30am · Melbourne CBD</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail">8 spots</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE: Success -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Delivery Confirmed <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Provide CPR</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">Melbourne</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+            <div style="max-height: 300px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px; opacity: 0.5;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">13</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">Provide CPR</div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                </div>
+              </div>
+
+              <!-- Success state -->
+              <div style="margin: 4px 8px; border: 2px solid #16a34a; border-radius: 8px; overflow: hidden;">
+                <div style="padding: 10px 12px; background: #f0fdf4; display: flex; align-items: center; gap: 10px;">
+                  <div style="text-align: center; min-width: 38px; padding: 5px; background: #dcfce7; border-radius: 4px;">
+                    <div style="font-size: 0.95rem; font-weight: 700;">14</div>
+                    <div style="font-size: 0.55rem; color: #666;">Jan</div>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 600; font-size: 0.8rem;">CPR <span class="tag-online" style="font-size: 0.55rem;">ONLINE</span></div>
+                    <div style="font-size: 0.7rem; color: #666;">10:00am · Virtual</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a; font-size: 0.85rem;">$89</div>
+                  </div>
+                </div>
+                <div style="padding: 10px 12px; background: #f0fdf4; border-top: 1px solid #bbf7d0; display: flex; align-items: center; gap: 8px;">
+                  <span style="color: #16a34a; font-size: 1rem;">&#10003;</span>
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.8rem; color: #166534;">Delivery confirmed</div>
+                    <div style="font-size: 0.7rem; color: #666;">To 3000 by Sun 12 Jan</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px; opacity: 0.5;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">15</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">CPR <span class="tag-express" style="font-size: 0.6rem;">EXPRESS</span></div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · CBD</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                </div>
+              </div>
+
+            </div>
+            <div style="padding: 12px 15px; border-top: 2px solid #eee; background: #fafafa;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3c: DELIVERY FAILS -->
+    <!-- ============================================ -->
+    <section class="section" id="section3c">
+      <div class="section-header">
+        <h2>3c. Online Session — Delivery Not Available</h2>
+        <p>Equipment can't be delivered in time, suggest alternatives</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP: Error -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Delivery Fails <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Provide CPR</h4>
+                <div class="wf-drawer-subtitle">HLTAID009 · Melbourne</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active">LIST</button>
+              <button class="wf-toggle-btn">CALENDAR</button>
+            </div>
+
+            <div style="max-height: 380px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="opacity: 0.5;">
+                <div class="date-block">
+                  <div class="day">13</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Provide CPR</div>
+                  <div class="time-loc">9:00am - 12:30pm · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$89</div>
+                  <div class="avail low">3 left</div>
+                </div>
+              </div>
+
+              <!-- Selected with error -->
+              <div style="margin: 4px 12px; border: 2px solid #dc2626; border-radius: 8px; overflow: hidden;">
+                <div class="wf-session-compact" style="background: #fef2f2; border: none; margin: 0;">
+                  <div class="date-block" style="background: #fee2e2;">
+                    <div class="day">14</div>
+                    <div class="month">Jan</div>
+                  </div>
+                  <div class="details">
+                    <div class="title">Provide CPR <span class="tag-online">ONLINE</span></div>
+                    <div class="time-loc">10:00am - 1:30pm · Live virtual session</div>
+                  </div>
+                  <div class="price-avail">
+                    <div class="price">$89</div>
+                    <div class="avail">20 spots</div>
+                  </div>
+                </div>
+
+                <!-- Error message -->
+                <div style="padding: 16px 20px; background: #fef2f2; border-top: 1px solid #fecaca;">
+                  <div style="display: flex; align-items: start; gap: 10px; margin-bottom: 12px;">
+                    <span style="color: #dc2626; font-size: 1.1rem;">&#10005;</span>
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.9rem; color: #991b1b;">Can't deliver in time</div>
+                      <div style="font-size: 0.8rem; color: #666; margin-top: 2px;">Equipment to 6000 (Perth) requires 7 days. This session is only 5 days away.</div>
+                    </div>
+                  </div>
+
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 8px;">Available options:</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit;">
+                      <span style="font-size: 0.85rem;"><strong>Online · Thu 23 Jan</strong> · 10:00am</span>
+                      <span style="color: #1976d2; font-size: 0.8rem;">Select →</span>
+                    </button>
+                    <button style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit;">
+                      <span style="font-size: 0.85rem;"><strong>In-person · Tue 14 Jan</strong> · Caulfield</span>
+                      <span style="color: #c41e3a; font-size: 0.8rem;">Select →</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button" style="opacity: 0.5; cursor: not-allowed;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE: Error -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Delivery Fails <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Provide CPR</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">Melbourne</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+            <div style="max-height: 340px; overflow-y: auto;">
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px; opacity: 0.5;">
+                <div class="date-block" style="min-width: 42px; padding: 6px;">
+                  <div class="day" style="font-size: 1rem;">13</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.85rem;">Provide CPR</div>
+                  <div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$89</div>
+                </div>
+              </div>
+
+              <!-- Error state -->
+              <div style="margin: 4px 8px; border: 2px solid #dc2626; border-radius: 8px; overflow: hidden;">
+                <div style="padding: 10px 12px; background: #fef2f2; display: flex; align-items: center; gap: 10px;">
+                  <div style="text-align: center; min-width: 38px; padding: 5px; background: #fee2e2; border-radius: 4px;">
+                    <div style="font-size: 0.95rem; font-weight: 700;">14</div>
+                    <div style="font-size: 0.55rem; color: #666;">Jan</div>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 600; font-size: 0.8rem;">CPR <span class="tag-online" style="font-size: 0.55rem;">ONLINE</span></div>
+                    <div style="font-size: 0.7rem; color: #666;">10:00am · Virtual</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a; font-size: 0.85rem;">$89</div>
+                  </div>
+                </div>
+                <div style="padding: 12px; background: #fef2f2; border-top: 1px solid #fecaca;">
+                  <div style="display: flex; align-items: start; gap: 8px; margin-bottom: 10px;">
+                    <span style="color: #dc2626; font-size: 0.9rem;">&#10005;</span>
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.8rem; color: #991b1b;">Can't deliver in time</div>
+                      <div style="font-size: 0.7rem; color: #666;">7 days needed, only 5 available</div>
+                    </div>
+                  </div>
+
+                  <div style="font-size: 0.75rem; font-weight: 600; color: #333; margin-bottom: 6px;">Try instead:</div>
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <button style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; text-align: left; cursor: pointer; font-size: 0.75rem; display: flex; justify-content: space-between; font-family: inherit;">
+                      <span><strong>Online</strong> · Thu 23 Jan</span>
+                      <span style="color: #1976d2;">→</span>
+                    </button>
+                    <button style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; text-align: left; cursor: pointer; font-size: 0.75rem; display: flex; justify-content: space-between; font-family: inherit;">
+                      <span><strong>In-person</strong> · Tue 14 Jan</span>
+                      <span style="color: #c41e3a;">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div style="padding: 12px 15px; border-top: 2px solid #eee; background: #fafafa;">
+              <button class="wf-button" style="padding: 14px; opacity: 0.5;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: MULTI-DAY COURSE -->
+    <!-- ============================================ -->
+    <section class="section" id="section4">
+      <div class="section-header">
+        <h2>4. Multi-Day Course — Calendar View</h2>
+        <p>Advanced First Aid spanning 3 consecutive days, shown as extended line</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — 3-Day Course Calendar <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Advanced First Aid + Remote</h4>
+                <div class="wf-drawer-subtitle">HLTAID014 + HLTAID013 · Melbourne · 3-day course</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn">LIST</button>
+              <button class="wf-toggle-btn active">CALENDAR</button>
+            </div>
+
+            <!-- Calendar controls -->
+            <div style="padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <button style="background: #f0f0f0; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: inherit;">← Prev</button>
+                <span style="font-weight: 600; font-size: 1.1rem;">January 2026</span>
+                <button style="background: #f0f0f0; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: inherit;">Next →</button>
+              </div>
+            </div>
+
+            <!-- Legend -->
+            <div style="padding: 10px 20px; background: #f9f9f9; border-bottom: 1px solid #eee; display: flex; gap: 20px; font-size: 0.8rem;">
+              <span><span style="display: inline-block; width: 10px; height: 10px; background: #c41e3a; border-radius: 50%; margin-right: 5px;"></span> In-person</span>
+              <span><span style="display: inline-block; width: 10px; height: 10px; background: #e0e0e0; border-radius: 50%; margin-right: 5px;"></span> Full</span>
+            </div>
+
+            <!-- Calendar grid -->
+            <div style="padding: 20px;">
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; text-align: center; margin-bottom: 10px;">
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">MON</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">TUE</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">WED</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">THU</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #666; padding: 8px;">FRI</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #999; padding: 8px;">SAT</div>
+                <div style="font-weight: 600; font-size: 0.8rem; color: #999; padding: 8px;">SUN</div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0;">
+                <!-- Week 1 -->
+                <div style="padding: 15px 5px; color: #ccc; font-size: 0.9rem;">30</div>
+                <div style="padding: 15px 5px; color: #ccc; font-size: 0.9rem;">31</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">1</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">2</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">3</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">4</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">5</div>
+
+                <!-- Week 2 -->
+                <div style="padding: 15px 5px; font-size: 0.9rem;">6</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">7</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">8</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">9</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">10</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">11</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">12</div>
+
+                <!-- Week 3 - SELECTED 3-day course -->
+                <div style="padding: 15px 0; font-size: 0.9rem; cursor: pointer; background: #fff5f5; border: 2px solid #c41e3a; border-radius: 6px 0 0 6px; border-right: none; text-align: center;">
+                  <strong>13</strong>
+                  <div style="margin-top: 6px; margin-left: 30%; margin-right: -2px;">
+                    <span style="display: block; height: 8px; background: #c41e3a; border-radius: 4px 0 0 4px;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 0; font-size: 0.9rem; background: #fff5f5; border-top: 2px solid #c41e3a; border-bottom: 2px solid #c41e3a; text-align: center;">
+                  14
+                  <div style="margin-top: 6px; margin-left: -2px; margin-right: -2px;">
+                    <span style="display: block; height: 8px; background: #c41e3a;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 0; font-size: 0.9rem; background: #fff5f5; border: 2px solid #c41e3a; border-radius: 0 6px 6px 0; border-left: none; text-align: center;">
+                  15
+                  <div style="margin-top: 6px; margin-left: -2px; margin-right: 30%;">
+                    <span style="display: block; height: 8px; background: #c41e3a; border-radius: 0 4px 4px 0;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">16</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">17</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">18</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">19</div>
+
+                <!-- Week 4 - another 3-day course -->
+                <div style="padding: 15px 0; font-size: 0.9rem; cursor: pointer; text-align: center;">
+                  20
+                  <div style="margin-top: 6px; margin-left: 30%; margin-right: -2px;">
+                    <span style="display: block; height: 8px; background: #c41e3a; border-radius: 4px 0 0 4px;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 0; font-size: 0.9rem; text-align: center;">
+                  21
+                  <div style="margin-top: 6px; margin-left: -2px; margin-right: -2px;">
+                    <span style="display: block; height: 8px; background: #c41e3a;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 0; font-size: 0.9rem; text-align: center;">
+                  22
+                  <div style="margin-top: 6px; margin-left: -2px; margin-right: 30%;">
+                    <span style="display: block; height: 8px; background: #c41e3a; border-radius: 0 4px 4px 0;"></span>
+                  </div>
+                </div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">23</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem;">24</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">25</div>
+                <div style="padding: 15px 5px; font-size: 0.9rem; color: #999;">26</div>
+              </div>
+            </div>
+
+            <!-- Selection detail -->
+            <div style="border-top: 2px solid #eee; padding: 20px; background: #fafafa;">
+              <div style="background: white; border: 2px solid #c41e3a; border-radius: 8px; padding: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 1rem;">Mon 13 – Wed 15 January</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 2px;">Caulfield South · 6 spots left</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a; font-size: 1.1rem;">$495</div>
+                  </div>
+                </div>
+                <div style="background: #f9fafb; border-radius: 6px; padding: 12px; font-size: 0.85rem; border: 1px solid #e5e7eb;">
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div>
+                      <div style="font-weight: 600; color: #333;">Day 1</div>
+                      <div style="color: #666;">8:30am - 5pm</div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 600; color: #333;">Day 2</div>
+                      <div style="color: #666;">8:30am - 5pm</div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 600; color: #333;">Day 3</div>
+                      <div style="color: #666;">8:30am - 4pm</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button">Add to Cart — $495</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — 3-Day Course Calendar <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Advanced FA + Remote</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">3-day course</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+
+            <!-- Mobile calendar nav -->
+            <div style="padding: 10px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+              <button style="background: #f0f0f0; border: none; padding: 5px 8px; border-radius: 4px; font-size: 0.8rem; font-family: inherit; cursor: pointer;">←</button>
+              <span style="font-weight: 600; font-size: 0.9rem;">Jan 13 - 19, 2026</span>
+              <button style="background: #f0f0f0; border: none; padding: 5px 8px; border-radius: 4px; font-size: 0.8rem; font-family: inherit; cursor: pointer;">→</button>
+            </div>
+
+            <!-- Week strip with multi-day line -->
+            <div style="display: flex; border-bottom: 1px solid #eee;">
+              <div style="flex: 1; text-align: center; padding: 10px 0; cursor: pointer; background: #fff5f5; border-bottom: 2px solid #c41e3a;">
+                <div style="font-size: 0.6rem; color: #c41e3a; font-weight: 600;">MON</div>
+                <div style="font-size: 0.9rem; margin: 2px 0; font-weight: 600; color: #c41e3a;">13</div>
+                <div style="margin-top: 2px; margin-left: 30%; margin-right: -1px;">
+                  <span style="display: block; height: 6px; background: #c41e3a; border-radius: 3px 0 0 3px;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0; cursor: pointer; background: #fff5f5;">
+                <div style="font-size: 0.6rem; color: #999;">TUE</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">14</div>
+                <div style="margin-top: 2px; margin-left: -1px; margin-right: -1px;">
+                  <span style="display: block; height: 6px; background: #c41e3a;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0; cursor: pointer; background: #fff5f5;">
+                <div style="font-size: 0.6rem; color: #999;">WED</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">15</div>
+                <div style="margin-top: 2px; margin-left: -1px; margin-right: 30%;">
+                  <span style="display: block; height: 6px; background: #c41e3a; border-radius: 0 3px 3px 0;"></span>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0;">
+                <div style="font-size: 0.6rem; color: #999;">THU</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">16</div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0;">
+                <div style="font-size: 0.6rem; color: #999;">FRI</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">17</div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0; opacity: 0.5;">
+                <div style="font-size: 0.6rem; color: #999;">SAT</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">18</div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 10px 0; opacity: 0.5;">
+                <div style="font-size: 0.6rem; color: #999;">SUN</div>
+                <div style="font-size: 0.9rem; margin: 2px 0;">19</div>
+              </div>
+            </div>
+
+            <!-- Course detail -->
+            <div style="padding: 12px; flex: 1; overflow-y: auto;">
+              <div style="background: white; border: 2px solid #c41e3a; border-radius: 8px; padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem;">Mon 13 - Wed 15 Jan</div>
+                    <div style="font-size: 0.75rem; color: #666;">Caulfield South</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #c41e3a; font-size: 1rem;">$495</div>
+                    <div style="font-size: 0.7rem; color: #e65100;">6 left</div>
+                  </div>
+                </div>
+                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px; font-size: 0.75rem;">
+                  <div style="margin-bottom: 4px;"><strong>Day 1:</strong> 8:30am-5pm</div>
+                  <div style="margin-bottom: 4px;"><strong>Day 2:</strong> 8:30am-5pm</div>
+                  <div><strong>Day 3:</strong> 8:30am-4pm</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="padding: 12px 15px; border-top: 2px solid #eee; background: #fafafa;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart — $495</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4b: MULTI-DAY LIST VIEW -->
+    <!-- ============================================ -->
+    <section class="section" id="section4b">
+      <div class="section-header">
+        <h2>4b. Multi-Day Course — List View</h2>
+        <p>Date range shown in date block, "3 DAYS" badge</p>
+      </div>
+      <div class="wireframe-row">
+
+        <!-- DESKTOP -->
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Multi-Day List <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-drawer-header">
+              <div>
+                <h4>Advanced First Aid + Remote</h4>
+                <div class="wf-drawer-subtitle">HLTAID014 + HLTAID013 · Melbourne · 3 start dates</div>
+              </div>
+              <span class="wf-close">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active">LIST</button>
+              <button class="wf-toggle-btn">CALENDAR</button>
+            </div>
+
+            <!-- Info banner -->
+            <div style="padding: 12px 20px; background: #fafafa; border-bottom: 1px solid #eee; font-size: 0.85rem; color: #666;">
+              <strong>3-day course:</strong> All sessions run Mon-Wed, 8:30am-5:00pm (Day 3 ends 4pm)
+            </div>
+
+            <div style="max-height: 280px; overflow-y: auto;">
+
+              <div class="wf-session-compact selected">
+                <div class="date-block" style="min-width: 65px;">
+                  <div class="day" style="font-size: 0.95rem;">13-15</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Advanced First Aid + Remote <span style="background: #f3f4f6; color: #6b7280; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-weight: 600;">3 DAYS</span></div>
+                  <div class="time-loc">Mon-Wed · 8:30am start · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$495</div>
+                  <div class="avail low">6 left</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block" style="min-width: 65px;">
+                  <div class="day" style="font-size: 0.95rem;">20-22</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Advanced First Aid + Remote <span style="background: #f3f4f6; color: #6b7280; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-weight: 600;">3 DAYS</span></div>
+                  <div class="time-loc">Mon-Wed · 8:30am start · Melbourne CBD</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$495</div>
+                  <div class="avail">10 spots</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact">
+                <div class="date-block" style="min-width: 65px;">
+                  <div class="day" style="font-size: 0.95rem;">27-29</div>
+                  <div class="month">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title">Advanced First Aid + Remote <span style="background: #f3f4f6; color: #6b7280; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-weight: 600;">3 DAYS</span></div>
+                  <div class="time-loc">Mon-Wed · 8:30am start · Caulfield South</div>
+                </div>
+                <div class="price-avail">
+                  <div class="price">$495</div>
+                  <div class="avail">12 spots</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer">
+              <button class="wf-button">Add to Cart — $495</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Multi-Day List <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div>
+                <h4 style="font-size: 1rem;">Advanced FA + Remote</h4>
+                <div style="font-size: 0.8rem; opacity: 0.85;">3 start dates</div>
+              </div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div class="wf-drawer-toggle">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+
+            <div style="padding: 8px 12px; background: #fafafa; border-bottom: 1px solid #eee; font-size: 0.75rem; color: #666;">
+              <strong>3-day course:</strong> Mon-Wed, 8:30am start
+            </div>
+
+            <div style="max-height: 260px; overflow-y: auto;">
+
+              <div class="wf-session-compact selected" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 50px; padding: 6px;">
+                  <div class="day" style="font-size: 0.85rem;">13-15</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.8rem;">Advanced FA <span style="background: #f3f4f6; color: #6b7280; font-size: 0.55rem; padding: 1px 4px; border-radius: 2px; margin-left: 4px;">3D</span></div>
+                  <div class="time-loc" style="font-size: 0.7rem;">Caulfield South</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$495</div>
+                  <div class="avail low" style="font-size: 0.65rem;">6 left</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 50px; padding: 6px;">
+                  <div class="day" style="font-size: 0.85rem;">20-22</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.8rem;">Advanced FA <span style="background: #f3f4f6; color: #6b7280; font-size: 0.55rem; padding: 1px 4px; border-radius: 2px; margin-left: 4px;">3D</span></div>
+                  <div class="time-loc" style="font-size: 0.7rem;">Melbourne CBD</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$495</div>
+                  <div class="avail" style="font-size: 0.65rem;">10</div>
+                </div>
+              </div>
+
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 50px; padding: 6px;">
+                  <div class="day" style="font-size: 0.85rem;">27-29</div>
+                  <div class="month" style="font-size: 0.6rem;">Jan</div>
+                </div>
+                <div class="details">
+                  <div class="title" style="font-size: 0.8rem;">Advanced FA <span style="background: #f3f4f6; color: #6b7280; font-size: 0.55rem; padding: 1px 4px; border-radius: 2px; margin-left: 4px;">3D</span></div>
+                  <div class="time-loc" style="font-size: 0.7rem;">Caulfield South</div>
+                </div>
+                <div class="price-avail" style="min-width: 50px;">
+                  <div class="price" style="font-size: 0.85rem;">$495</div>
+                  <div class="avail" style="font-size: 0.65rem;">12</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wf-drawer-footer" style="padding: 12px 15px;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart — $495</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
