@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Response Booking - Checkout Flow v5</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#333;line-height:1.5}
+    .container{max-width:1400px;margin:0 auto;padding:40px 20px}
+    h1{font-size:2rem;margin-bottom:10px;color:#c41e3a}
+    .subtitle{color:#666;margin-bottom:40px}
+    .section{margin-bottom:60px}
+    .section-header{background:#c41e3a;color:#fff;padding:15px 25px;border-radius:8px 8px 0 0}
+    .section-header h2{font-size:1.3rem;margin-bottom:5px}
+    .section-header p{opacity:.9;font-size:.95rem}
+    .wireframe-row{display:flex;gap:30px;background:#fff;padding:30px;border-radius:0 0 8px 8px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap;align-items:flex-start}
+    .wireframe{flex:1;min-width:300px}
+    .wireframe.mobile-fixed{flex:0 0 auto;min-width:auto}
+    .wireframe-label{font-weight:600;margin-bottom:15px;color:#666;font-size:.9rem;text-transform:uppercase;letter-spacing:.5px}
+    .wireframe-box{border:2px solid #ddd;border-radius:8px;background:#fafafa;overflow:hidden}
+    .wf-mobile{width:320px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+    .version-badge{display:inline-block;background:#c41e3a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600;margin-left:10px}
+    .device-label{display:inline-block;background:#e5e7eb;color:#374151;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600;margin-left:8px}
+    .annotation{background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:15px;margin-top:15px;font-size:.9rem;color:#92400e}
+    
+    /* Checkout specific */
+    .wf-header{background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee}
+    .wf-logo{width:40px;height:40px;background:#c41e3a;border-radius:6px}
+    .wf-progress{display:flex;justify-content:center;align-items:center;padding:20px;gap:10px;background:#f9f9f9;border-bottom:1px solid #eee}
+    .wf-progress-step{display:flex;align-items:center;gap:8px;font-size:.85rem;color:#999}
+    .wf-progress-step .dot{width:28px;height:28px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem}
+    .wf-progress-step.active{color:#c41e3a}
+    .wf-progress-step.active .dot{background:#c41e3a;color:#fff}
+    .wf-progress-step.complete .dot{background:#16a34a;color:#fff}
+    .wf-progress-line{width:40px;height:2px;background:#e0e0e0}
+    .wf-progress-line.done{background:#16a34a}
+    .wf-cart-icon{position:relative;font-size:1.3rem}
+    .wf-cart-badge{position:absolute;top:-8px;right:-8px;background:#c41e3a;color:#fff;font-size:.7rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+    
+    .checkout-layout{display:flex;min-height:500px}
+    .checkout-main{flex:1;padding:30px;border-right:1px solid #eee}
+    .checkout-sidebar{width:320px;padding:25px;background:#f9f9f9}
+    
+    .form-section{margin-bottom:30px}
+    .form-section h3{font-size:1.1rem;margin-bottom:15px;color:#333}
+    .form-row{display:flex;gap:15px;margin-bottom:15px}
+    .form-field{flex:1}
+    .form-field label{display:block;font-size:.85rem;font-weight:500;margin-bottom:5px;color:#555}
+    .form-field input,.form-field select{width:100%;padding:12px;border:2px solid #ddd;border-radius:6px;font-size:.95rem}
+    .form-field input:focus{border-color:#c41e3a;outline:none}
+    .form-field.error input{border-color:#dc2626}
+    .form-field .error-msg{color:#dc2626;font-size:.8rem;margin-top:4px}
+    
+    .btn{padding:14px 28px;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;border:none}
+    .btn-primary{background:#c41e3a;color:#fff}
+    .btn-secondary{background:#fff;color:#c41e3a;border:2px solid #c41e3a}
+    .btn-full{width:100%}
+    
+    .tabs{display:flex;border-bottom:2px solid #eee;margin-bottom:20px}
+    .tab{padding:12px 24px;font-weight:500;color:#666;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+    .tab.active{color:#c41e3a;border-bottom-color:#c41e3a}
+    
+    .card{background:#fff;border:2px solid #e5e7eb;border-radius:8px;padding:15px;margin-bottom:15px}
+    .card.selected{border-color:#c41e3a;background:#fff5f5}
+    
+    .you-badge{background:#c41e3a;color:#fff;font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px}
+    .student-row{display:flex;align-items:center;padding:12px;border-bottom:1px solid #eee}
+    .student-row:last-child{border-bottom:none}
+    .student-avatar{width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.9rem;margin-right:12px}
+    .student-info{flex:1}
+    .student-name{font-weight:600;font-size:.9rem}
+    .student-email{font-size:.8rem;color:#666}
+    .remove-btn{color:#dc2626;font-size:.85rem;cursor:pointer}
+    
+    .summary-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee}
+    .summary-item:last-child{border-bottom:none}
+    .summary-course{font-weight:600;font-size:.9rem}
+    .summary-detail{font-size:.8rem;color:#666}
+    .summary-price{font-weight:600;color:#c41e3a}
+    .summary-total{display:flex;justify-content:space-between;padding:15px 0;font-size:1.1rem;font-weight:700;border-top:2px solid #333;margin-top:10px}
+    
+    .coupon-row{display:flex;gap:10px;margin:15px 0}
+    .coupon-row input{flex:1;padding:10px;border:2px solid #ddd;border-radius:6px}
+    .coupon-row button{padding:10px 15px;background:#f3f4f6;border:none;border-radius:6px;font-weight:500;cursor:pointer}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Checkout Flow <span class="version-badge">v5</span></h1>
+  <p class="subtitle">Step 2: "Are you attending?" → Contact details → Participant enrollment → Order summary</p>
+
+  <!-- SECTION 5: ARE YOU ATTENDING -->
+  <section class="section" id="section5">
+    <div class="section-header">
+      <h2>5. "Are You Attending?" Prompt</h2>
+      <p>First thing users see at checkout — fixes the "SAME CONTACT" confusion from v2/v3 feedback</p>
+    </div>
+    <div class="wireframe-row">
+      <div class="wireframe">
+        <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+        <div class="wireframe-box">
+          <div class="wf-header">
+            <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+            <div class="wf-cart-icon">🛒<span class="wf-cart-badge">1</span></div>
+          </div>
+          <div class="wf-progress">
+            <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+            <div class="wf-progress-line done"></div>
+            <div class="wf-progress-step active"><div class="dot">2</div><span>Checkout</span></div>
+            <div class="wf-progress-line"></div>
+            <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+          </div>
+          <div style="padding:60px 40px;text-align:center;max-width:500px;margin:0 auto">
+            <div style="font-size:3rem;margin-bottom:20px">🎓</div>
+            <h2 style="font-size:1.5rem;margin-bottom:10px">Are you attending this course?</h2>
+            <p style="color:#666;margin-bottom:30px">This helps us set up enrollment correctly</p>
+            <div style="display:flex;gap:15px;justify-content:center">
+              <button class="btn btn-primary" style="min-width:140px">Yes, I'm attending</button>
+              <button class="btn btn-secondary" style="min-width:140px">No, booking for others</button>
+            </div>
+            <p style="font-size:.85rem;color:#999;margin-top:25px">You can always add yourself to courses later</p>
+          </div>
+        </div>
+        <div class="annotation">
+          <strong>Key UX fix:</strong> This replaces confusing "SAME CONTACT" button. If "Yes" → auto-add booker as student to ALL courses in cart with "YOU" badge. If "No" → skip to contact details, no auto-enrollment.
+        </div>
+      </div>
+      
+      <div class="wireframe mobile-fixed">
+        <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+        <div class="wireframe-box wf-mobile">
+          <div class="wf-header" style="padding:12px 15px">
+            <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div><span style="font-weight:600;margin-left:10px;font-size:1rem">Booking</span></div>
+            <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">1</span></div>
+          </div>
+          <div class="wf-progress" style="padding:12px;gap:5px">
+            <div class="wf-progress-step complete" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">✓</div><span>Course</span></div>
+            <div class="wf-progress-line done" style="width:20px"></div>
+            <div class="wf-progress-step active" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">2</div><span>Checkout</span></div>
+            <div class="wf-progress-line" style="width:20px"></div>
+            <div class="wf-progress-step" style="font-size:.75rem"><div class="dot" style="width:22px;height:22px;font-size:.65rem">3</div><span>Done</span></div>
+          </div>
+          <div style="padding:40px 25px;text-align:center">
+            <div style="font-size:2.5rem;margin-bottom:15px">🎓</div>
+            <h2 style="font-size:1.25rem;margin-bottom:8px">Are you attending?</h2>
+            <p style="color:#666;margin-bottom:25px;font-size:.9rem">This helps us set up enrollment</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <button class="btn btn-primary btn-full">Yes, I'm attending</button>
+              <button class="btn btn-secondary btn-full">No, booking for others</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: CONTACT DETAILS -->
+  <section class="section" id="section6">
+    <div class="section-header">
+      <h2>6. Contact Details Form</h2>
+      <p>Personal/Business tabs — business shows company fields</p>
+    </div>
+    <div class="wireframe-row">
+      <div class="wireframe" style="flex:2">
+        <div class="wireframe-label">Desktop — Full Checkout Layout <span class="device-label">Desktop</span></div>
+        <div class="wireframe-box">
+          <div class="wf-header">
+            <div style="display:flex;align-items:center"><div class="wf-logo"></div><span style="font-weight:600;margin-left:12px">Booking</span></div>
+            <div class="wf-cart-icon">🛒<span class="wf-cart-badge">2</span></div>
+          </div>
+          <div class="wf-progress">
+            <div class="wf-progress-step complete"><div class="dot">✓</div><span>Select Course</span></div>
+            <div class="wf-progress-line done"></div>
+            <div class="wf-progress-step active"><div class="dot">2</div><span>Checkout</span></div>
+            <div class="wf-progress-line"></div>
+            <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+          </div>
+          
+          <div class="checkout-layout">
+            <div class="checkout-main">
+              
+              <!-- Contact Section -->
+              <div class="form-section">
+                <h3>1. Contact Details</h3>
+                <div class="tabs">
+                  <div class="tab active">Personal</div>
+                  <div class="tab">Business</div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>First Name *</label>
+                    <input type="text" value="Sarah">
+                  </div>
+                  <div class="form-field">
+                    <label>Last Name *</label>
+                    <input type="text" value="Johnson">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>Email *</label>
+                    <input type="email" value="sarah@email.com">
+                  </div>
+                  <div class="form-field">
+                    <label>Phone *</label>
+                    <input type="tel" value="0412 345 678">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Participants Section (collapsed preview) -->
+              <div class="form-section" style="opacity:.6">
+                <h3 style="color:#999">2. Participants <span style="font-weight:400;font-size:.9rem">(next step)</span></h3>
+              </div>
+              
+              <!-- Payment Section (collapsed preview) -->
+              <div class="form-section" style="opacity:.4">
+                <h3 style="color:#999">3. Payment <span style="font-weight:400;font-size:.9rem">(final step)</span></h3>
+              </div>
+              
+              <button class="btn btn-primary" style="margin-top:20px">Continue to Participants →</button>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="checkout-sidebar">
+              <h4 style="margin-bottom:15px;font-size:1rem">Order Summary</h4>
+              
+              <div class="summary-item">
+                <div>
+                  <div class="summary-course">Provide CPR</div>
+                  <div class="summary-detail">Mon 13 Jan · 9:00am<br>Caulfield South</div>
+                  <div class="summary-detail" style="margin-top:5px">
+                    <span style="background:#e5e7eb;padding:2px 6px;border-radius:3px;font-size:.75rem">1 spot</span>
+                  </div>
+                </div>
+                <div class="summary-price">$89</div>
+              </div>
+              
+              <div class="summary-item">
+                <div>
+                  <div class="summary-course">Fire Warden</div>
+                  <div class="summary-detail">Wed 15 Jan · 1:00pm<br>Melbourne CBD</div>
+                  <div class="summary-detail" style="margin-top:5px">
+                    <span style="background:#e5e7eb;padding:2px 6px;border-radius:3px;font-size:.75rem">1 spot</span>
+                  </div>
+                </div>
+                <div class="summary-price">$120</div>
+              </div>
+              
+              <div class="coupon-row">
+                <input type="text" placeholder="Coupon code">
+                <button>Apply</button>
+              </div>
+              
+              <div class="summary-total">
+                <span>Total</span>
+                <span>$209</span>
+              </div>
+              
+              <p style="font-size:.75rem;color:#999;margin-top:15px;text-align:center">🔒 Your cart is saved for 72 hours</p>
+            </div>
+          </div>
+        </div>
+        <div class="annotation">
+          <strong>Layout:</strong> Main content left, order summary right. Sections expand as user progresses. "Business" tab adds Company Name + ABN fields.
+        </div>
+      </div>
+      
+      <div class="wireframe mobile-fixed">
+        <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+        <div class="wireframe-box wf-mobile">
+          <div class="wf-header" style="padding:12px 15px">
+            <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+            <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">2</span></div>
+          </div>
+          
+          <div style="padding:15px">
+            <h3 style="font-size:1rem;margin-bottom:12px">1. Contact Details</h3>
+            <div class="tabs" style="margin-bottom:15px">
+              <div class="tab active" style="padding:8px 15px;font-size:.85rem">Personal</div>
+              <div class="tab" style="padding:8px 15px;font-size:.85rem">Business</div>
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">First Name *</label>
+              <input type="text" value="Sarah" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Last Name *</label>
+              <input type="text" value="Johnson" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Email *</label>
+              <input type="email" value="sarah@email.com" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:15px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px;color:#555">Phone *</label>
+              <input type="tel" value="0412 345 678" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+          </div>
+          
+          <!-- Mobile sticky footer -->
+          <div style="border-top:2px solid #eee;padding:12px 15px;background:#f9f9f9">
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+              <span style="font-size:.9rem">2 courses</span>
+              <span style="font-weight:700">$209</span>
+            </div>
+            <button class="btn btn-primary btn-full" style="padding:12px">Continue →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6b: BUSINESS TAB -->
+  <section class="section" id="section6b">
+    <div class="section-header">
+      <h2>6b. Contact Details — Business Tab</h2>
+      <p>Additional fields for company bookings</p>
+    </div>
+    <div class="wireframe-row">
+      <div class="wireframe">
+        <div class="wireframe-label">Desktop — Business Fields <span class="device-label">Desktop</span></div>
+        <div class="wireframe-box" style="padding:25px">
+          <div class="tabs" style="max-width:400px">
+            <div class="tab">Personal</div>
+            <div class="tab active">Business</div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Company Name *</label>
+              <input type="text" placeholder="Acme Corporation">
+            </div>
+            <div class="form-field">
+              <label>ABN <span style="color:#999;font-weight:400">(optional)</span></label>
+              <input type="text" placeholder="12 345 678 901">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Your Name *</label>
+              <input type="text" placeholder="Sarah Johnson">
+            </div>
+            <div class="form-field">
+              <label>Your Role <span style="color:#999;font-weight:400">(optional)</span></label>
+              <input type="text" placeholder="HR Manager">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Email *</label>
+              <input type="email" placeholder="sarah@acme.com">
+            </div>
+            <div class="form-field">
+              <label>Phone *</label>
+              <input type="tel" placeholder="0412 345 678">
+            </div>
+          </div>
+          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:12px;margin-top:15px;font-size:.85rem;color:#0369a1">
+            💼 Business bookings can request an invoice instead of paying now
+          </div>
+        </div>
+        <div class="annotation"><strong>Business tab:</strong> Company Name required, ABN optional. Note about invoice option appears. This feeds into payment step.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: PARTICIPANT ENROLLMENT -->
+  <section class="section" id="section7">
+    <div class="section-header">
+      <h2>7. Participant Enrollment</h2>
+      <p>Adding students to courses — "YOU" badge for booker, "Add Me" for multi-course</p>
+    </div>
+    <div class="wireframe-row">
+      <div class="wireframe" style="flex:2">
+        <div class="wireframe-label">Desktop — Participants Section Expanded <span class="device-label">Desktop</span></div>
+        <div class="wireframe-box">
+          <div class="checkout-layout" style="min-height:auto">
+            <div class="checkout-main">
+              
+              <!-- Contact (collapsed) -->
+              <div class="form-section">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <h3 style="color:#16a34a">✓ 1. Contact Details</h3>
+                  <a href="#" style="color:#c41e3a;font-size:.85rem">Edit</a>
+                </div>
+                <p style="font-size:.9rem;color:#666;margin-top:5px">Sarah Johnson · sarah@email.com</p>
+              </div>
+              
+              <!-- Participants (active) -->
+              <div class="form-section">
+                <h3>2. Participants</h3>
+                <p style="font-size:.9rem;color:#666;margin-bottom:20px">Add students to each course. You can enroll the same person in multiple courses.</p>
+                
+                <!-- Course 1 -->
+                <div class="card selected">
+                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+                    <div>
+                      <div style="font-weight:600">Provide CPR</div>
+                      <div style="font-size:.85rem;color:#666">Mon 13 Jan · 9:00am · Caulfield South</div>
+                    </div>
+                    <div style="font-weight:600;color:#c41e3a">$89</div>
+                  </div>
+                  
+                  <div style="background:#f9f9f9;border-radius:6px;overflow:hidden">
+                    <div class="student-row">
+                      <div class="student-avatar" style="background:#c41e3a;color:#fff">SJ</div>
+                      <div class="student-info">
+                        <div class="student-name">Sarah Johnson <span class="you-badge">YOU</span></div>
+                        <div class="student-email">sarah@email.com</div>
+                      </div>
+                      <span class="remove-btn">Remove</span>
+                    </div>
+                  </div>
+                  
+                  <button style="margin-top:12px;padding:10px 15px;background:#fff;border:2px dashed #ddd;border-radius:6px;width:100%;cursor:pointer;font-size:.9rem;color:#666">
+                    + Add another student to this course
+                  </button>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="card">
+                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+                    <div>
+                      <div style="font-weight:600">Fire Warden</div>
+                      <div style="font-size:.85rem;color:#666">Wed 15 Jan · 1:00pm · Melbourne CBD</div>
+                    </div>
+                    <div style="font-weight:600;color:#c41e3a">$120</div>
+                  </div>
+                  
+                  <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:6px;padding:15px;text-align:center">
+                    <div style="color:#dc2626;font-weight:500;margin-bottom:8px">No students enrolled yet</div>
+                    <div style="display:flex;gap:10px;justify-content:center">
+                      <button style="padding:8px 15px;background:#c41e3a;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;font-size:.85rem">Add Me to This Course</button>
+                      <button style="padding:8px 15px;background:#fff;border:2px solid #ddd;border-radius:6px;font-weight:500;cursor:pointer;font-size:.85rem">Add Someone Else</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <button class="btn btn-primary" style="margin-top:20px">Continue to Payment →</button>
+              </div>
+            </div>
+            
+            <!-- Sidebar with students shown -->
+            <div class="checkout-sidebar">
+              <h4 style="margin-bottom:15px;font-size:1rem">Order Summary</h4>
+              
+              <div class="summary-item">
+                <div>
+                  <div class="summary-course">Provide CPR</div>
+                  <div class="summary-detail">Mon 13 Jan · Caulfield</div>
+                  <div style="margin-top:8px">
+                    <span style="display:inline-flex;align-items:center;background:#f3f4f6;padding:3px 8px;border-radius:4px;font-size:.75rem">
+                      <span style="width:18px;height:18px;background:#c41e3a;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;margin-right:5px">SJ</span>
+                      Sarah J.
+                    </span>
+                  </div>
+                </div>
+                <div class="summary-price">$89</div>
+              </div>
+              
+              <div class="summary-item">
+                <div>
+                  <div class="summary-course">Fire Warden</div>
+                  <div class="summary-detail">Wed 15 Jan · CBD</div>
+                  <div style="margin-top:8px">
+                    <span style="color:#dc2626;font-size:.75rem">⚠ No students</span>
+                  </div>
+                </div>
+                <div class="summary-price">$120</div>
+              </div>
+              
+              <div class="summary-total">
+                <span>Total</span>
+                <span>$209</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation">
+          <strong>Key features:</strong> "YOU" badge on booker. "Add Me to This Course" button for multi-course bookings (from panel feedback). Warning state for courses with no students. Sidebar shows enrolled names.
+        </div>
+      </div>
+      
+      <div class="wireframe mobile-fixed">
+        <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+        <div class="wireframe-box wf-mobile">
+          <div class="wf-header" style="padding:12px 15px">
+            <div style="display:flex;align-items:center"><div class="wf-logo" style="width:32px;height:32px"></div></div>
+            <div class="wf-cart-icon" style="font-size:1.1rem">🛒<span class="wf-cart-badge" style="width:16px;height:16px;font-size:.6rem">2</span></div>
+          </div>
+          
+          <div style="padding:15px;max-height:380px;overflow-y:auto">
+            <h3 style="font-size:1rem;margin-bottom:12px">2. Participants</h3>
+            
+            <!-- Course 1 -->
+            <div class="card selected" style="padding:12px">
+              <div style="font-weight:600;font-size:.9rem">Provide CPR</div>
+              <div style="font-size:.75rem;color:#666;margin-bottom:10px">Mon 13 Jan · Caulfield</div>
+              
+              <div style="background:#f9f9f9;border-radius:6px;padding:10px;display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;background:#c41e3a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600">SJ</div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:.85rem">Sarah J. <span class="you-badge" style="font-size:.6rem">YOU</span></div>
+                </div>
+                <span style="color:#dc2626;font-size:.75rem">✕</span>
+              </div>
+              
+              <button style="margin-top:10px;padding:8px;background:#fff;border:2px dashed #ddd;border-radius:6px;width:100%;font-size:.8rem;color:#666">+ Add student</button>
+            </div>
+            
+            <!-- Course 2 -->
+            <div class="card" style="padding:12px">
+              <div style="font-weight:600;font-size:.9rem">Fire Warden</div>
+              <div style="font-size:.75rem;color:#666;margin-bottom:10px">Wed 15 Jan · CBD</div>
+              
+              <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:6px;padding:12px;text-align:center">
+                <div style="color:#dc2626;font-size:.8rem;margin-bottom:8px">No students</div>
+                <button style="padding:8px 12px;background:#c41e3a;color:#fff;border:none;border-radius:6px;font-size:.8rem;font-weight:500;width:100%">Add Me</button>
+              </div>
+            </div>
+          </div>
+          
+          <div style="border-top:2px solid #eee;padding:12px 15px;background:#f9f9f9">
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+              <span style="font-size:.9rem">Total</span>
+              <span style="font-weight:700">$209</span>
+            </div>
+            <button class="btn btn-primary btn-full" style="padding:12px">Continue to Payment →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7b: ADD STUDENT MODAL -->
+  <section class="section" id="section7b">
+    <div class="section-header">
+      <h2>7b. Add Student Modal</h2>
+      <p>Form to add a new student — checks for existing Axcelerate match</p>
+    </div>
+    <div class="wireframe-row">
+      <div class="wireframe">
+        <div class="wireframe-label">Desktop — Add Student Modal <span class="device-label">Desktop</span></div>
+        <div class="wireframe-box" style="background:rgba(0,0,0,.3);padding:40px;display:flex;justify-content:center;align-items:center;min-height:400px">
+          <div style="background:#fff;border-radius:12px;width:100%;max-width:450px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.2)">
+            <div style="padding:20px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+              <h3 style="font-size:1.1rem">Add Student</h3>
+              <span style="font-size:1.5rem;cursor:pointer;color:#999">×</span>
+            </div>
+            <div style="padding:20px">
+              <p style="font-size:.9rem;color:#666;margin-bottom:20px">Adding to: <strong>Provide CPR</strong> · Mon 13 Jan</p>
+              
+              <div class="form-row">
+                <div class="form-field">
+                  <label>First Name *</label>
+                  <input type="text" placeholder="John">
+                </div>
+                <div class="form-field">
+                  <label>Last Name *</label>
+                  <input type="text" placeholder="Smith">
+                </div>
+              </div>
+              <div class="form-field" style="margin-bottom:15px">
+                <label>Email *</label>
+                <input type="email" placeholder="john.smith@email.com">
+              </div>
+              <div class="form-field" style="margin-bottom:15px">
+                <label>Phone <span style="color:#999;font-weight:400">(optional)</span></label>
+                <input type="tel" placeholder="0400 000 000">
+              </div>
+              <div class="form-field">
+                <label>Date of Birth <span style="color:#999;font-weight:400">(optional)</span></label>
+                <input type="date">
+              </div>
+            </div>
+            <div style="padding:15px 20px;background:#f9f9f9;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end">
+              <button class="btn btn-secondary" style="padding:10px 20px">Cancel</button>
+              <button class="btn btn-primary" style="padding:10px 20px">Add Student</button>
+            </div>
+          </div>
+        </div>
+        <div class="annotation">
+          <strong>Participant matching:</strong> When email is entered, system checks Axcelerate for existing contact. If found, auto-fills name/DOB and shows "Found existing profile" message. Prevents duplicates.
+        </div>
+      </div>
+      
+      <div class="wireframe mobile-fixed">
+        <div class="wireframe-label">Mobile — Full Screen <span class="device-label">Mobile</span></div>
+        <div class="wireframe-box wf-mobile">
+          <div style="padding:15px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+            <h3 style="font-size:1rem">Add Student</h3>
+            <span style="font-size:1.3rem;color:#999">×</span>
+          </div>
+          <div style="padding:15px">
+            <p style="font-size:.85rem;color:#666;margin-bottom:15px">Adding to: <strong>Provide CPR</strong></p>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px">First Name *</label>
+              <input type="text" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px">Last Name *</label>
+              <input type="text" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px">Email *</label>
+              <input type="email" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:.8rem;margin-bottom:4px">Phone</label>
+              <input type="tel" style="width:100%;padding:10px;border:2px solid #ddd;border-radius:6px;font-size:.9rem">
+            </div>
+          </div>
+          <div style="padding:15px;border-top:1px solid #eee;background:#f9f9f9">
+            <button class="btn btn-primary btn-full" style="padding:12px">Add Student</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

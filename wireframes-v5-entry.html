@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Response Booking Form - Entry Screens v5</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+    h1 { font-size: 2rem; margin-bottom: 10px; color: #c41e3a; }
+    .subtitle { color: #666; margin-bottom: 40px; font-size: 1.1rem; }
+    .section { margin-bottom: 60px; }
+    .section-header { background: #c41e3a; color: white; padding: 15px 25px; border-radius: 8px 8px 0 0; }
+    .section-header h2 { font-size: 1.3rem; margin-bottom: 5px; }
+    .section-header p { opacity: 0.9; font-size: 0.95rem; }
+    .wireframe-row { display: flex; gap: 30px; background: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex-wrap: wrap; align-items: flex-start; }
+    .wireframe { flex: 1; min-width: 300px; }
+    .wireframe.mobile-fixed { flex: 0 0 auto; min-width: auto; }
+    .wireframe-label { font-weight: 600; margin-bottom: 15px; color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .wireframe-box { border: 2px solid #ddd; border-radius: 8px; background: #fafafa; overflow: hidden; }
+    .wf-header { background: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+    .wf-logo { width: 40px; height: 40px; background: #c41e3a; border-radius: 6px; }
+    .wf-header-text { font-weight: 600; font-size: 1.1rem; margin-left: 12px; }
+    .wf-cart-icon { position: relative; font-size: 1.3rem; cursor: pointer; }
+    .wf-cart-badge { position: absolute; top: -8px; right: -8px; background: #c41e3a; color: white; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+    .wf-progress { display: flex; justify-content: center; align-items: center; padding: 20px; gap: 10px; background: #f9f9f9; border-bottom: 1px solid #eee; }
+    .wf-progress-step { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #999; }
+    .wf-progress-step .dot { width: 28px; height: 28px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem; }
+    .wf-progress-step.active { color: #c41e3a; }
+    .wf-progress-step.active .dot { background: #c41e3a; color: white; }
+    .wf-progress-line { width: 40px; height: 2px; background: #e0e0e0; }
+    .wf-mobile { width: 320px; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .version-badge { display: inline-block; background: #c41e3a; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: 10px; }
+    .device-label { display: inline-block; background: #e5e7eb; color: #374151; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-left: 8px; text-transform: uppercase; }
+    .wf-location-pill { display: inline-block; padding: 12px 24px; border: 2px solid #ddd; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.15s; background: white; }
+    .wf-location-pill:hover { border-color: #c41e3a; background: #fff5f5; }
+    .wf-location-pill.online { border-style: dashed; }
+    .wf-filter-pill { display: inline-block; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; background: #f3f4f6; color: #4b5563; font-weight: 500; }
+    .wf-filter-pill.active { background: #c41e3a; color: white; }
+    .wf-course-card { background: white; border: 2px solid #e5e7eb; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.15s; }
+    .wf-course-card:hover { border-color: #c41e3a; box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15); }
+    .wf-course-card .img { height: 80px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.85rem; }
+    .wf-course-card .content { padding: 12px; }
+    .wf-course-card .tag { font-size: 0.65rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .wf-course-card .title { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #333; }
+    .wf-course-card .price { font-size: 0.8rem; color: #666; margin-bottom: 8px; }
+    .wf-course-card .price strong { color: #c41e3a; }
+    .wf-course-card .link { color: #c41e3a; font-size: 0.8rem; font-weight: 500; text-decoration: none; }
+    .wf-dropdown { display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
+    .wf-dropdown.selected { border-color: #c41e3a; }
+    .wf-dropdown-label { font-size: 0.7rem; color: #999; text-transform: uppercase; }
+    .wf-dropdown-value { font-weight: 600; font-size: 0.9rem; }
+    .wf-drawer-header { background: #c41e3a; color: white; padding: 20px 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .wf-drawer-header h4 { font-size: 1.15rem; margin-bottom: 5px; }
+    .wf-drawer-subtitle { font-size: 0.9rem; opacity: 0.85; }
+    .wf-close { font-size: 1.6rem; cursor: pointer; opacity: 0.8; line-height: 1; }
+    .wf-toggle-btn { flex: 1; padding: 14px; text-align: center; font-size: 0.9rem; background: #f8f8f8; border: none; cursor: pointer; font-weight: 500; }
+    .wf-toggle-btn.active { background: white; font-weight: 600; color: #c41e3a; }
+    .wf-session-compact { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #eee; cursor: pointer; gap: 15px; }
+    .wf-session-compact.selected { background: #fff5f5; border-left: 4px solid #c41e3a; padding-left: 16px; }
+    .wf-session-compact .date-block { text-align: center; min-width: 50px; padding: 8px; background: #f5f5f5; border-radius: 6px; }
+    .wf-session-compact .date-block .day { font-size: 1.1rem; font-weight: 700; color: #333; line-height: 1; }
+    .wf-session-compact .date-block .month { font-size: 0.7rem; color: #666; text-transform: uppercase; }
+    .wf-session-compact .details { flex: 1; }
+    .wf-session-compact .details .title { font-weight: 600; font-size: 0.9rem; color: #333; margin-bottom: 2px; }
+    .wf-session-compact .details .time-loc { font-size: 0.8rem; color: #666; }
+    .wf-session-compact .price-avail { text-align: right; min-width: 80px; }
+    .wf-session-compact .price-avail .price { font-weight: 700; color: #c41e3a; font-size: 0.95rem; }
+    .wf-session-compact .price-avail .avail { font-size: 0.75rem; color: #666; }
+    .wf-session-compact .price-avail .avail.low { color: #e65100; font-weight: 600; }
+    .tag-express { background: #e3f2fd; color: #1565c0; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; margin-left: 8px; font-weight: 600; }
+    .tag-online { background: #f3f4f6; color: #4b5563; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; margin-left: 8px; font-weight: 600; }
+    .wf-button { background: #c41e3a; color: white; border: none; padding: 16px 32px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; font-size: 1rem; }
+    .wf-drawer-footer { padding: 18px 25px; border-top: 2px solid #eee; background: #fafafa; }
+    .annotation { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 15px; margin-top: 15px; font-size: 0.9rem; color: #92400e; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Real Response Booking Form <span class="version-badge">v5 - Entry</span></h1>
+    <p class="subtitle">New entry screens: cold start → course grid → session drawer → add to cart</p>
+    
+    <!-- SECTION 0: COLD START -->
+    <section class="section" id="section0">
+      <div class="section-header">
+        <h2>0. Cold Start — Location Selection</h2>
+        <p>For users landing directly on /booking (not via magic link)</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo"></div>
+                <span class="wf-header-text">Booking</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="#" style="color: #666; text-decoration: none; font-size: 0.9rem;">Sign in</a>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step active"><div class="dot">1</div><span>Select Course</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+            <div style="padding: 60px 40px; text-align: center;">
+              <h2 style="font-size: 1.5rem; margin-bottom: 10px; color: #333;">Where would you like to train?</h2>
+              <p style="color: #666; margin-bottom: 30px;">Select a location to see available courses and dates</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; max-width: 600px; margin: 0 auto;">
+                <div class="wf-location-pill">📍 Melbourne</div>
+                <div class="wf-location-pill">📍 Sydney</div>
+                <div class="wf-location-pill">📍 Brisbane</div>
+                <div class="wf-location-pill">📍 Perth</div>
+                <div class="wf-location-pill">📍 Adelaide</div>
+                <div class="wf-location-pill online">💻 Online</div>
+              </div>
+              <p style="color: #999; font-size: 0.85rem; margin-top: 30px;">Online courses require equipment shipped to your location</p>
+            </div>
+          </div>
+          <div class="annotation"><strong>Cold start:</strong> Users arriving without location context see this first. "Online" has dashed border to subtly differentiate.</div>
+        </div>
+        
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo" style="width: 32px; height: 32px;"></div>
+                <span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span>
+              </div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒</div>
+            </div>
+            <div class="wf-progress" style="padding: 15px 10px; gap: 5px;">
+              <div class="wf-progress-step active" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">1</div><span>Course</span></div>
+              <div class="wf-progress-line" style="width: 20px;"></div>
+              <div class="wf-progress-step" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line" style="width: 20px;"></div>
+              <div class="wf-progress-step" style="font-size: 0.75rem;"><div class="dot" style="width: 24px; height: 24px; font-size: 0.7rem;">3</div><span>Done</span></div>
+            </div>
+            <div style="padding: 30px 20px; text-align: center;">
+              <h2 style="font-size: 1.2rem; margin-bottom: 8px; color: #333;">Where would you like to train?</h2>
+              <p style="color: #666; margin-bottom: 25px; font-size: 0.9rem;">Select your location</p>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Melbourne</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Sydney</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Brisbane</div>
+                <div class="wf-location-pill" style="padding: 14px 20px; text-align: center;">📍 Perth</div>
+                <div class="wf-location-pill online" style="padding: 14px 20px; text-align: center;">💻 Online</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SECTION 0b: COURSE GRID -->
+    <section class="section" id="section0b">
+      <div class="section-header">
+        <h2>0b. Course Grid — Browsing Courses</h2>
+        <p>After location selected: category filters, course cards with pricing, "View dates" links</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex: 2;">
+          <div class="wireframe-label">Desktop <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo"></div>
+                <span class="wf-header-text">Booking</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="#" style="color: #666; text-decoration: none; font-size: 0.9rem;">Sign in</a>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+            </div>
+            <div class="wf-progress">
+              <div class="wf-progress-step active"><div class="dot">1</div><span>Select Course</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">2</div><span>Checkout</span></div>
+              <div class="wf-progress-line"></div>
+              <div class="wf-progress-step"><div class="dot">3</div><span>Confirmation</span></div>
+            </div>
+            <div style="padding: 20px 25px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+              <div class="wf-dropdown selected">
+                <div>
+                  <div class="wf-dropdown-label">Location</div>
+                  <div class="wf-dropdown-value">Melbourne ▼</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span class="wf-filter-pill active">All</span>
+                <span class="wf-filter-pill">Basic</span>
+                <span class="wf-filter-pill">Advanced</span>
+                <span class="wf-filter-pill">Childcare</span>
+                <span class="wf-filter-pill">Workplace</span>
+              </div>
+            </div>
+            <div style="padding: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #ef4444, #dc2626);">❤️ CPR</div>
+                <div class="content">
+                  <div class="tag">Basic</div>
+                  <div class="title">Provide CPR</div>
+                  <div class="price">From <strong>$89</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">🩹 First Aid</div>
+                <div class="content">
+                  <div class="tag">Basic</div>
+                  <div class="title">Provide First Aid</div>
+                  <div class="price">From <strong>$166</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">🏥 Advanced</div>
+                <div class="content">
+                  <div class="tag">Advanced</div>
+                  <div class="title">Advanced First Aid</div>
+                  <div class="price">From <strong>$395</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🔥 Fire</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Fire Warden</div>
+                  <div class="price">From <strong>$120</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #10b981, #059669);">👶 Child</div>
+                <div class="content">
+                  <div class="tag">Childcare</div>
+                  <div class="title">Childcare First Aid</div>
+                  <div class="price">From <strong>$175</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">⚡ LVR</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Low Voltage Rescue</div>
+                  <div class="price">From <strong>$195</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #ec4899, #db2777);">🧠 Mental</div>
+                <div class="content">
+                  <div class="tag">Workplace</div>
+                  <div class="title">Mental Health FA</div>
+                  <div class="price">From <strong>$295</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+              <div class="wf-course-card">
+                <div class="img" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">🌿 Remote</div>
+                <div class="content">
+                  <div class="tag">Advanced</div>
+                  <div class="title">Remote Area FA</div>
+                  <div class="price">From <strong>$495</strong></div>
+                  <a href="#" class="link">View dates →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation"><strong>Desktop grid:</strong> 4 columns, cards hover (border turns red). "From $XX" shows starting price. "View dates →" text link. Entire card clickable.</div>
+        </div>
+        
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;">
+                <div class="wf-logo" style="width: 32px; height: 32px;"></div>
+                <span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span>
+              </div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒</div>
+            </div>
+            <div style="padding: 12px; border-bottom: 1px solid #eee;">
+              <div class="wf-dropdown selected" style="padding: 8px 12px; width: 100%; margin-bottom: 10px;">
+                <div>
+                  <div class="wf-dropdown-label" style="font-size: 0.6rem;">Location</div>
+                  <div class="wf-dropdown-value" style="font-size: 0.8rem;">Melbourne ▼</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; overflow-x: auto;">
+                <span class="wf-filter-pill active" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">All</span>
+                <span class="wf-filter-pill" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">Basic</span>
+                <span class="wf-filter-pill" style="padding: 6px 12px; font-size: 0.75rem; white-space: nowrap;">Advanced</span>
+              </div>
+            </div>
+            <div style="max-height: 350px; overflow-y: auto;">
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">❤️</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Basic</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Provide CPR</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$89</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🩹</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Basic</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Provide First Aid</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$166</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🏥</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Advanced</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Advanced First Aid</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$395</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+              <div style="display: flex; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">🔥</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 0.65rem; color: #999; text-transform: uppercase;">Workplace</div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Fire Warden</div>
+                  <div style="font-size: 0.8rem; color: #666;">From <strong style="color: #c41e3a;">$120</strong></div>
+                </div>
+                <div style="color: #c41e3a; font-size: 1.2rem;">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SECTION 0c: DRAWER OVER GRID -->
+    <section class="section" id="section0c">
+      <div class="section-header">
+        <h2>0c. Session Drawer — Opens Over Grid</h2>
+        <p>Slide-over drawer when course clicked; grid stays visible behind</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe" style="flex: 2;">
+          <div class="wireframe-label">Desktop — Drawer Over Grid <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box" style="position: relative; min-height: 450px;">
+            <div style="opacity: 0.3;">
+              <div class="wf-header">
+                <div style="display: flex; align-items: center;"><div class="wf-logo"></div><span class="wf-header-text">Booking</span></div>
+                <div class="wf-cart-icon">🛒</div>
+              </div>
+              <div style="padding: 20px 25px; display: flex; gap: 20px;">
+                <div class="wf-dropdown selected"><div><div class="wf-dropdown-label">Location</div><div class="wf-dropdown-value">Melbourne ▼</div></div></div>
+                <span class="wf-filter-pill active">All</span>
+              </div>
+              <div style="padding: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #ef4444;">CPR</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #3b82f6;">FA</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #8b5cf6;">Adv</div></div>
+                <div class="wf-course-card"><div class="img" style="height: 60px; background: #f59e0b;">Fire</div></div>
+              </div>
+            </div>
+            <div style="position: absolute; top: 0; right: 0; width: 400px; height: 100%; background: white; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column;">
+              <div class="wf-drawer-header" style="padding: 15px 20px;">
+                <div><h4 style="font-size: 1.05rem;">Provide CPR</h4><div class="wf-drawer-subtitle" style="font-size: 0.8rem;">HLTAID009 · Melbourne · 8 sessions</div></div>
+                <span class="wf-close" style="font-size: 1.4rem;">×</span>
+              </div>
+              <div style="display: flex; border-bottom: 2px solid #eee;">
+                <button class="wf-toggle-btn active" style="padding: 10px;">LIST</button>
+                <button class="wf-toggle-btn" style="padding: 10px;">CALENDAR</button>
+              </div>
+              <div style="flex: 1; overflow-y: auto;">
+                <div class="wf-session-compact selected" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">13</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">Provide CPR</div><div class="time-loc" style="font-size: 0.75rem;">9:00am · Caulfield</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail low" style="font-size: 0.7rem;">3 left</div></div>
+                </div>
+                <div class="wf-session-compact" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">14</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">CPR <span class="tag-online" style="font-size: 0.6rem;">ONLINE</span></div><div class="time-loc" style="font-size: 0.75rem;">10:00am · Virtual</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail" style="font-size: 0.7rem;">20</div></div>
+                </div>
+                <div class="wf-session-compact" style="padding: 10px 15px;">
+                  <div class="date-block" style="min-width: 45px; padding: 6px;"><div class="day" style="font-size: 1rem;">15</div><div class="month" style="font-size: 0.6rem;">Jan</div></div>
+                  <div class="details"><div class="title" style="font-size: 0.85rem;">CPR <span class="tag-express" style="font-size: 0.6rem;">EXPRESS</span></div><div class="time-loc" style="font-size: 0.75rem;">9:00am · CBD</div></div>
+                  <div class="price-avail" style="min-width: 60px;"><div class="price" style="font-size: 0.85rem;">$89</div><div class="avail" style="font-size: 0.7rem;">8</div></div>
+                </div>
+              </div>
+              <div class="wf-drawer-footer" style="padding: 15px 20px;">
+                <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+          <div class="annotation"><strong>Drawer behavior:</strong> Slides from right. Grid fades but visible. Click outside to close.</div>
+        </div>
+        
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Full Screen <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile">
+            <div class="wf-drawer-header" style="padding: 12px 15px;">
+              <div><h4 style="font-size: 1rem;">Provide CPR</h4><div style="font-size: 0.8rem; opacity: 0.85;">Melbourne · 8 sessions</div></div>
+              <span class="wf-close" style="font-size: 1.4rem;">×</span>
+            </div>
+            <div style="display: flex; border-bottom: 2px solid #eee;">
+              <button class="wf-toggle-btn active" style="padding: 10px; font-size: 0.85rem;">LIST</button>
+              <button class="wf-toggle-btn" style="padding: 10px; font-size: 0.85rem;">CALENDAR</button>
+            </div>
+            <div style="flex: 1; overflow-y: auto; max-height: 280px;">
+              <div class="wf-session-compact selected" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">13</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">Provide CPR</div><div class="time-loc" style="font-size: 0.7rem;">9:00am · Caulfield</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div><div class="avail low" style="font-size: 0.65rem;">3 left</div></div>
+              </div>
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">14</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">CPR <span class="tag-online" style="font-size: 0.55rem;">ONLINE</span></div><div class="time-loc" style="font-size: 0.7rem;">10:00am · Virtual</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div></div>
+              </div>
+              <div class="wf-session-compact" style="padding: 10px 12px; gap: 10px;">
+                <div class="date-block" style="min-width: 40px; padding: 5px;"><div class="day" style="font-size: 0.95rem;">15</div><div class="month" style="font-size: 0.55rem;">Jan</div></div>
+                <div class="details"><div class="title" style="font-size: 0.8rem;">CPR <span class="tag-express" style="font-size: 0.55rem;">EXPRESS</span></div><div class="time-loc" style="font-size: 0.7rem;">9:00am · CBD</div></div>
+                <div class="price-avail" style="min-width: 45px;"><div class="price" style="font-size: 0.8rem;">$89</div></div>
+              </div>
+            </div>
+            <div class="wf-drawer-footer" style="padding: 12px 15px;">
+              <button class="wf-button" style="padding: 14px;">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SECTION 0d: ADD TO CART TOAST -->
+    <section class="section" id="section0d">
+      <div class="section-header">
+        <h2>0d. "Added to Cart" Toast</h2>
+        <p>Visual confirmation after adding to cart</p>
+      </div>
+      <div class="wireframe-row">
+        <div class="wireframe">
+          <div class="wireframe-label">Desktop — Toast <span class="device-label">Desktop</span></div>
+          <div class="wireframe-box">
+            <div class="wf-header" style="position: relative;">
+              <div style="display: flex; align-items: center;"><div class="wf-logo"></div><span class="wf-header-text">Booking</span></div>
+              <div class="wf-cart-icon">🛒<span class="wf-cart-badge" style="background: #16a34a;">1</span></div>
+              <div style="position: absolute; top: 100%; right: 20px; margin-top: 10px; background: #166534; color: white; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <span style="font-size: 1.2rem;">✓</span>
+                <div>
+                  <div style="font-weight: 600;">Added to cart</div>
+                  <div style="font-size: 0.85rem; opacity: 0.9;">Provide CPR · Mon 13 Jan</div>
+                </div>
+                <a href="#" style="color: white; margin-left: 15px; font-weight: 500; text-decoration: underline;">View cart</a>
+              </div>
+            </div>
+            <div style="padding: 60px 40px; text-align: center; color: #666;">
+              <p>Course grid continues below...</p>
+              <p style="font-size: 0.85rem; margin-top: 10px;">Toast auto-dismisses after 4 seconds</p>
+            </div>
+          </div>
+          <div class="annotation"><strong>Toast:</strong> Appears top-right. Shows course + date. "View cart" link. Auto-dismisses after 4s.</div>
+        </div>
+        
+        <div class="wireframe mobile-fixed">
+          <div class="wireframe-label">Mobile — Bottom Toast <span class="device-label">Mobile</span></div>
+          <div class="wireframe-box wf-mobile" style="position: relative;">
+            <div class="wf-header" style="padding: 12px 15px;">
+              <div style="display: flex; align-items: center;"><div class="wf-logo" style="width: 32px; height: 32px;"></div><span class="wf-header-text" style="font-size: 1rem; margin-left: 10px;">Booking</span></div>
+              <div class="wf-cart-icon" style="font-size: 1.1rem;">🛒<span class="wf-cart-badge" style="background: #16a34a; width: 16px; height: 16px; font-size: 0.6rem;">1</span></div>
+            </div>
+            <div style="padding: 100px 20px; text-align: center; color: #999; font-size: 0.9rem;">Course list...</div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #166534; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.1rem;">✓</span>
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem;">Added to cart</div>
+                  <div style="font-size: 0.75rem; opacity: 0.9;">CPR · Mon 13 Jan</div>
+                </div>
+              </div>
+              <a href="#" style="color: white; font-weight: 600; font-size: 0.85rem; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px; text-decoration: none;">View Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- WHAT'S NEXT -->
+    <section class="section">
+      <div class="section-header" style="background: #6b7280;">
+        <h2>📋 Screens Still to Wireframe</h2>
+        <p>Checkout flow and confirmation</p>
+      </div>
+      <div class="wireframe-row">
+        <div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">5. "Are You Attending?"</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Yes/No prompt, auto-adds booker as student</p>
+          </div>
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">6. Contact Details</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Personal/Business tabs, form fields</p>
+          </div>
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">7. Participant Enrollment</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Adding students, "Add Me" button</p>
+          </div>
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">8. Order Summary</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Cart with student names, coupon, totals</p>
+          </div>
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">9. Payment</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Stripe Elements, invoice option, T&Cs</p>
+          </div>
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px;">
+            <h4 style="color: #374151; margin-bottom: 8px;">10. Confirmation</h4>
+            <p style="font-size: 0.85rem; color: #6b7280;">Booking confirmed, next steps</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </div>
+</body>
+</html>
